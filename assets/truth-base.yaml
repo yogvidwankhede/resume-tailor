@@ -1,0 +1,635 @@
+# ============================================================================
+# TRUTH LEDGER — Yogvid Wankhede
+# ----------------------------------------------------------------------------
+# Every claim that may appear on a generated resume must trace to an entry here.
+# Sources: canonical LaTeX resume family, LinkedIn profile, GitHub (24 public
+# repos), personal portfolio, and the Claude Corps application record.
+#
+# Field conventions
+#   verified: true|false   — corroborated by >=2 independent sources, or by the
+#                            candidate directly
+#   conflict:              — two sources disagree; DO NOT silently pick one
+#   defend:                — the interview question this claim invites
+#   mechanism:             — what actually produced the metric (guards against
+#                            false-causality rewrites)
+#   cut_from_final: true   — real, but dropped from recent resume versions for
+#                            space; available for re-inclusion when JD-relevant
+# ============================================================================
+
+schema_version: 1
+candidate_id: yogvid-wankhede
+
+identity:
+  name: Yogvid Wankhede
+  pronouns: He/Him
+  email: yogvidwankhede@gmail.com
+  phone: "+1 (909) 705-0369"
+  location: St. Louis, Missouri, United States
+  location_note: LinkedIn EUNO entry lists Chicago, Illinois for the internship location
+  links:
+    linkedin: https://www.linkedin.com/in/yogvidwankhede
+    linkedin_legacy: https://www.linkedin.com/in/yogvid-wankhede-149103231/
+    github: https://github.com/yogvidwankhede
+    portfolio: https://www.yogvidwankhede.com
+  headline_current: "SWE (AI/ML) Intern @ EUNO | MS in Engineering: Data Analytics & Statistics | AI, Machine Learning & Data Science"
+  work_authorization:
+    us_authorized: true
+    requires_sponsorship: true      # F-1 / OPT -> H-1B
+    willing_to_relocate: true
+  professional_experience_years: "<2 full-time"
+
+# ---------------------------------------------------------------------------
+education:
+  - degree: Master of Science
+    field: Data Analytics & Statistics
+    field_long: "Engineering: Data Analytics & Statistics"
+    institution: Washington University in St. Louis
+    start: 2024-08
+    end: 2026-05
+    verified: true
+  - degree: Bachelor of Technology
+    field: Artificial Intelligence
+    institution: G.H. Raisoni College of Engineering
+    location: Nagpur, Maharashtra, India
+    start: 2020-08
+    end: 2024-06
+    verified: true
+
+coursework_claimable:
+  # Only list these when the JD makes coursework relevant (early-career /
+  # research / quant roles). Never invent a course title to match a JD.
+  - Statistical Inference
+  - Machine Learning
+  - Predictive Modeling
+  - Time Series
+  - Experimental Design
+  - Databases
+
+certifications:
+  - name: AI Fluency
+    issuer: Anthropic
+    url: https://verify.skilljar.com/c/yp7j38kd9euw
+    verified: true
+    flag: "Confirm the link->certificate mapping; the two URLs were supplied unlabeled."
+  - name: Claude 101
+    issuer: Anthropic
+    url: https://verify.skilljar.com/c/dz4rus7u6q7t
+    verified: true
+    flag: "Confirm the link->certificate mapping; the two URLs were supplied unlabeled."
+
+# ---------------------------------------------------------------------------
+experience:
+
+  - id: euno
+    title: Software Engineering Intern
+    title_variants:
+      - Software Engineering Intern
+      - "AI/ML Software Engineer Intern"
+    employer: EUNO (The Epiphany Company, LLC)
+    employer_short: EUNO
+    type: Internship
+    location: Chicago, Illinois, United States (on-site)
+    start: 2026-06
+    end: present
+    tense: present
+    verified: true
+    domain: [LLM systems, agents, backend, GCP, healthcare-adjacent]
+    facts:
+      - id: euno.pipeline
+        claim: "6-stage LLM reasoning pipeline on LangGraph.js (NestJS, TypeScript) converting raw conversation into structured per-user knowledge"
+        detail: "pipeline stages: facts -> gaps -> tensions -> insights; strict JSON schemas and input validation"
+        metric: "~98% valid structured-output parsing"
+        mechanism: "strict JSON schemas + input validation"
+        defend: "What is in the failing 2%, and how is it handled?"
+        verified: true
+      - id: euno.cost
+        claim: "cost-aware multi-model orchestration across GPT-4o-mini and Claude Haiku 4.5"
+        detail: "per-call token budgeting and usage logging"
+        metric: "~40% inference cost reduction, to sub-$0.002 per cycle"
+        mechanism: "cost-aware model routing + per-call token budgeting — NOT evals"
+        defend: "What was the baseline cost, and what routing rule produced the saving?"
+        false_causality_warning: "Do not attribute this saving to evals, RAG, or the pipeline design."
+        verified: true
+      - id: euno.heartbeat
+        claim: "autonomous 'heartbeat' worker running scheduled background analysis cycles"
+        detail_gcp: "GCP: Cloud Scheduler -> Cloud Run -> Cloud Tasks"
+        detail_queue: "BullMQ / Redis job queue (per LinkedIn)"
+        metric: "2 scheduled cycles daily; trigger gates, cooldowns, tension-scoring over 100+ candidate signals"
+        conflict: "Resume says GCP Scheduler/Run/Tasks; LinkedIn says BullMQ/Redis. Both may be true (queue on top of Cloud Tasks). Confirm before naming only one."
+        verified: true
+      - id: euno.rag
+        claim: "embeddings-based RAG / semantic retrieval over a per-user knowledge graph"
+        detail: "HIPAA-aligned safeguards"
+        safeguards_resume: "AES-GCM field encryption, in-code authorization, zero PHI in logs"
+        safeguards_linkedin: "AES-GCM encryption, row-level security, zero PHI in logs"
+        conflict: "'in-code authorization' vs 'row-level security' — pick the one that is literally true."
+        cut_from_final: true
+        verified: true
+      - id: euno.docs
+        claim: "authored runbooks and operational documentation so teammates across the organization could own the system after handoff"
+        mechanism: "actually wrote the docs — confirmed by the candidate"
+        verified: true
+
+  - id: wustl_med
+    title: Research Assistant
+    title_variants:
+      - Research Assistant
+      - Graduate Research Assistant
+    employer: Washington University School of Medicine in St. Louis
+    type: Part-time
+    location: St. Louis, Missouri, United States (on-site)
+    start: 2026-01
+    end: 2026-06
+    tense: past
+    verified: true
+    domain: [inverse problems, medical imaging, signal processing, MATLAB, Python]
+    facts:
+      - id: ra.emmi
+        claim: "EMMI system combining MRI-derived geometry with 256-channel recordings for noninvasive 3D uterine contraction mapping"
+        metric: "31±8 mm spatial, 2048 Hz temporal resolution; translational sheep model"
+        application: preterm labor prediction
+        verified: true
+      - id: ra.mfs
+        claim: "implemented the Method of Fundamental Solutions for inverse electrocardiographic imaging"
+        metric: "40% less computation time vs Boundary Element Method; correlation 0.85 -> 0.92; error 0.97 -> 0.47"
+        mechanism: "MFS replacing BEM"
+        defend: "Why is MFS cheaper here, and what does the error metric measure?"
+        verified: true
+      - id: ra.validation
+        claim: "validated reconstruction accuracy across 118 pacing episodes"
+        metric: "median CC = 0.83; 2.9–16.5 mm localization error; robust under 10% noise and ±1 cm geometric deformation"
+        verified: true
+      - id: ra.scale
+        claim: "analyzed 28,120 potential maps and 595 electrograms from 8 contraction episodes"
+        metric: "consistent correlation CC = 0.80–0.85 across physiological conditions"
+        cut_from_final: true
+        verified: true
+      - id: ra.stakeholders
+        claim: "presented findings to clinical stakeholders"
+        verified: true
+
+  - id: wustl_ta
+    title: Teaching Assistant
+    employer: Washington University in St. Louis
+    type: Part-time
+    start: 2025-08
+    end: 2026-01
+    conflict: "Start/end conflict: resume.tex + LinkedIn say Aug 2025 – Jan 2026; t2/wbase/wb/t/v_* say Sep 2025 – Feb 2026. LinkedIn is the more likely authority. RESOLVE before shipping."
+    tense: past
+    verified: true
+    domain: [teaching, electrical engineering, circuit analysis, mentoring]
+    facts:
+      - id: ta.instruction
+        claim: "led weekly lab and recitation sections for 40+ undergraduates"
+        detail: "circuit analysis: Kirchhoff's laws, nodal/mesh analysis, Thévenin/Norton equivalents, transient/AC response"
+        verified: true
+      - id: ta.labs
+        claim: "guided hands-on labs — breadboarding, oscilloscope and function-generator use, SPICE simulation"
+        detail: "bridging theoretical circuit models to measured behaviour"
+        verified: true
+      - id: ta.assessment
+        claim: "graded problem sets, lab reports, and exams for 40+ students with detailed feedback"
+        cut_from_final: true
+        verified: true
+      - id: ta.office_hours
+        claim: "held weekly office hours and one-on-one mentoring sessions"
+        verified: true
+
+  - id: asterisc
+    title: Data Science Intern
+    title_variants:
+      - Data Science Intern
+      - Machine Learning Intern
+    employer: ASTERISC (Asterisc Computer Institute)
+    type: Full-time
+    location: Nagpur, Maharashtra, India
+    start: 2023-12
+    end: 2024-06
+    tense: past
+    verified: true
+    domain: [time series, anomaly detection, cybersecurity, imbalanced classification]
+    facts:
+      - id: ast.forecast
+        claim: "cyber-attack forecasting system using ARIMA, LSTM, and Random Forest on KDDCup 1999"
+        dataset: "KDDCup 1999 — network intrusion detection, 494K+ records, highly imbalanced"
+        metric: "95.4% accuracy at a 0.6% false alarm rate across 9 attack types"
+        mechanism: "temporal and behavioural feature engineering; operating point tuned for downstream review capacity"
+        defend: "KDDCup 1999 is a famously easy benchmark — what did you do about class imbalance and leakage?"
+        do_not: "Do NOT reframe this dataset as healthcare, public-health, or financial data. It is network intrusion data and the linked paper proves it."
+        verified: true
+      - id: ast.dtw
+        claim: "deployed a Dynamic Time Warping classifier flagging emerging attack patterns"
+        metric: "88.3% accuracy on predicted events; 4–8 day prediction horizon"
+        verified: true
+      - id: ast.pub
+        claim: "led the research initiative resulting in an IJSRD publication"
+        publication_ref: pub_ijsrd
+        verified: true
+
+  - id: safetechno
+    title: Data Analyst
+    title_variants:
+      - Data Analyst
+      - "Data Analyst — Part-Time"
+    employer: SAFETECHNO SERVICES
+    type: "Full-time per LinkedIn; 'Part-Time' on recent resume versions"
+    conflict: "Employment type differs between LinkedIn (Full-time) and resume.tex (Part-Time). Resolve — this is a material claim."
+    start: 2021-01
+    end: 2023-12
+    tense: past
+    verified: true
+    domain: [Oil & Gas analytics, SQL, reporting, dashboards, data governance]
+    facts:
+      - id: safe.datasets
+        claim: "consolidated and maintained operational datasets across 15+ Oil & Gas engineering, inspection, and certification projects"
+        detail: "supporting compliance and decision-making"
+        verified: true
+        do_not: "Do NOT describe these clients as government agencies. They were not."
+      - id: safe.analysis
+        claim: "analyzed project and business data to surface performance trends and operational risk patterns informing management decisions"
+        verified: true
+      - id: safe.reporting
+        claim: "built structured reports and performance dashboards"
+        metric: "~30% reduction in report preparation time; increased visibility into client deliverables"
+        verified: true
+      - id: safe.process
+        claim: "standardized data-tracking and record-management processes"
+        metric: "reduced data-retrieval time; improved accuracy and traceability across teams"
+        verified: true
+
+  - id: oasis
+    title: Data Science Intern (Remote)
+    employer: Oasis Infobyte
+    type: Part-time
+    start: 2023-05
+    end: 2023-06
+    tense: past
+    verified: true
+    cut_from_final: true
+    note: "Short 2-month internship. Include only when the JD is early-career/analyst-shaped and space allows, or when the retail/healthcare framing is directly relevant."
+    facts:
+      - id: oasis.predictive
+        claim: "predictive models on 100K+ healthcare records using Python and scikit-learn"
+        metric: "89% accuracy in outcome predictions"
+        verified: true
+      - id: oasis.forecast
+        claim: "time-series forecasting on 50K+ retail transactions using ARIMA"
+        metric: "identified $200K in revenue opportunities"
+        defend: "$200K identified — by whose estimate, and was it realized?"
+        verified: true
+      - id: oasis.pipelines
+        claim: "automated data preprocessing pipelines integrating 10+ sources"
+        metric: "97% improvement in data integrity; 60% reduction in processing time"
+        verified: true
+
+# ---------------------------------------------------------------------------
+projects:
+
+  - id: healthmate
+    name: HealthMate-AI
+    title_variants:
+      - "HealthMate-AI: RAG System with Domain-Adapted Embeddings for Medical Decision Support"
+      - "HealthMate-AI: Retrieval System with Domain-Adapted Embeddings for High-Stakes Decision Support"
+    url: https://github.com/yogvidwankhede/HealthMate-AI
+    model_url: https://huggingface.co/yogvidwankhede/healthmate-minilm-l6-v2-medical-3fold
+    stack: [Python, RAG, sentence-transformers, MiniLM-L6-v2, LoRA, Pinecone, GPT-4o, Mistral]
+    verified: true
+    facts:
+      - claim: "retrieval pipeline over 40K+ medical text chunks from the Gale Encyclopedia"
+        metric: "93.3% retrieval accuracy"
+      - claim: "fine-tuned sentence-transformer embeddings with LoRA under 3-fold cross-validation"
+        metric: "+18.31% Spearman correlation"
+      - claim: "head-to-head model evaluation, GPT-4o vs Mistral, to justify the production choice"
+        metric: "75.96% semantic similarity"
+      - claim: "vector retrieval deployed on Pinecone"
+    do_not: "This is RAG, not an agent system. Do not describe it as 'agent frameworks'."
+    stale_claim: "Older resume versions said 'sentence-transformer ensemble model'. The ensemble claim was dropped — do not reinstate it."
+
+  - id: sign_language
+    name: Real-Time Sign Language Interpreter
+    title_variants:
+      - "Real-Time Sign Language Interpreter Using MediaPipe, Dynamic Time Warping, and NLP"
+    url: https://github.com/yogvidwankhede/Sign_Language_Interpreter
+    publication_ref: pub_springer
+    stack: [Python, MediaPipe, Dynamic Time Warping, NLP, TTS]
+    verified: true
+    facts:
+      - claim: "real-time inference service for sign-language recognition"
+        metric: "92% accuracy; 500+ requests/day; <200 ms latency"
+      - claim: "DTW temporal-similarity classification beating an LSTM baseline"
+        metric: "+11.7% over LSTM baseline"
+      - claim: "improves accessibility for the deaf community"
+      - claim: "NLP integration for text-to-speech synthesis"
+
+  - id: image_captioning
+    name: Image Captioning System with Text-to-Speech
+    title_variants:
+      - "Image Captioning System with Text-to-Speech for Visual Accessibility"
+    url: https://github.com/yogvidwankhede/Image-Captioning-System-Enhanced-with-a-TTS
+    stack: [Python, InceptionV3, Transformer, MS COCO, Docker, pyttsx3]
+    verified: true
+    facts:
+      - claim: "InceptionV3 + Transformer captioning model trained on MS COCO"
+        metric: "70K+ images, 330K+ training samples; 16% precision gain over baseline attention"
+      - claim: "containerized end-to-end pipeline with pyttsx3 text-to-speech"
+        metric: "<300 ms inference latency"
+
+  - id: ventureos
+    name: "VentureOS: Multi-Agent AI Co-Founder"
+    url_live: https://ventureos-yogvid.vercel.app/
+    url_repo: https://github.com/yogvidwankhede/VentureOS
+    stack: [JavaScript, LangChain, Gemini, Flask, Server-Sent Events]
+    verified: true
+    facts:
+      - claim: "8 agents orchestrated on LangChain turning one sentence about a startup idea into market research, competitor analysis, a fundability score, 3-year financial modeling, matched investors, and a generated landing page"
+        metric: "8 agents, 12 capabilities"
+      - claim: "streamed agent output to the client over Server-Sent Events for live progress across long-running async cycles"
+      - claim: "shipped as a live public product"
+        award: "top 10 at OpenAI's Handshake competition"
+        defend: "Top 10 — out of how many, and what was the judging basis? Did not place top 3."
+    note: "Strongest project for agent/LLM-platform roles. Including it usually means cutting another project."
+
+  - id: vishwakarma
+    name: "Vishwakarma: 21 Claude Code skills for AI coding agents"
+    url_repo: https://github.com/yogvidwankhede/vishwakarma
+    url_live: https://yogvidwankhede.github.io/vishwakarma/
+    stack: [TypeScript, React, TailwindCSS, MCP, Claude Code]
+    verified: true
+    facts:
+      - claim: "authored 21 Claude Code skills covering design judgment, colour, motion, accessibility, layout, and theming"
+      - claim: "cross-agent compatible — works with Cursor, Windsurf, Cline and 10+ agents"
+    note: "Directly relevant to AI-tooling, developer-experience, and agent-infrastructure roles."
+
+  - id: pyshell
+    name: "PyShell: POSIX-compatible shell in Python"
+    url_repo: https://github.com/yogvidwankhede/PyShell
+    url_live: https://pypi.org/project/pyshell-terminal/
+    stack: [Python, CLI, systems]
+    verified: true
+    facts:
+      - claim: "feature-rich POSIX-compatible shell with real Unix-style scripting"
+        metric: "50+ built-in commands; cross-platform"
+      - claim: "published on PyPI as pyshell-terminal"
+    note: "Best systems-fundamentals signal in the inventory. Use for backend/infra/SWE roles."
+
+  - id: http_server
+    name: "HTTP/1.1 server from scratch"
+    url_repo: https://github.com/yogvidwankhede/http-server
+    stack: [Python, networking, systems]
+    verified: true
+    facts:
+      - claim: "production-grade HTTP/1.1 server built from scratch in Python covering security, performance, and modern web standards"
+    note: "Pairs with PyShell for 'writes real systems code' evidence."
+
+  - id: pygrep
+    name: "PyGrep: regex engine and grep-like CLI from scratch"
+    url_repo: https://github.com/yogvidwankhede/PyGrep
+    stack: [Python, CLI, regex]
+    verified: true
+    facts:
+      - claim: "lightweight regex engine and grep-like CLI built from scratch"
+      - claim: "Python-like regular expressions, real-time search preview, multi-file support"
+    conflict: "Portfolio describes PyGrep as 'a VS Code extension for advanced text search'; the GitHub repo describes a CLI + regex engine. Confirm which."
+
+  - id: law_gpt
+    name: "law-gpt: AI legal research assistant"
+    url_repo: https://github.com/yogvidwankhede/law-gpt
+    stack: [LangChain, Pinecone, GPT-4o, Flask, RAG]
+    verified: true
+    facts:
+      - claim: "RAG over law textbooks with LangChain, Pinecone, GPT-4o and Flask"
+    note: "Second RAG system — useful when a JD wants demonstrated repetition of the pattern, or a legal/compliance domain."
+
+  - id: sentiment_api
+    name: "Multilingual sentiment-analysis REST API"
+    url_repo: https://github.com/yogvidwankhede/sentiment-api
+    stack: [Python, Flask, Hugging Face Transformers, REST]
+    verified: true
+    facts:
+      - claim: "production-grade multilingual sentiment-analysis REST API with Flask and Hugging Face Transformers"
+
+  - id: sales_dashboard
+    name: "Tableau sales-intelligence dashboard"
+    url_repo: https://github.com/yogvidwankhede/sales-dashboard
+    stack: [Tableau, Jupyter, business intelligence]
+    verified: true
+    facts:
+      - claim: "interactive Tableau sales-intelligence dashboard surfacing revenue-growth opportunities"
+        metric: "15% revenue growth opportunity; $1.5M projected impact"
+        defend: "Projected by what model, over what horizon?"
+    note: "The only BI/dashboard artifact in the inventory. Lead with it for analyst / BI roles."
+
+  - id: private_dns
+    name: "Private DNS resolver Chrome extension"
+    url_repo: https://github.com/yogvidwankhede/private-dns-extension
+    stack: [Chrome extension, DNS-over-HTTPS, networking, privacy]
+    verified: true
+    facts:
+      - claim: "Chrome extension performing HTTPS-encrypted DNS resolution (DNS-over-HTTPS)"
+      - claim: "built-in ad and tracker blocking, real-time query statistics"
+
+  - id: fiscal_agent
+    name: "FiscalAgent: financial Q&A chatbot"
+    url_repo: https://github.com/yogvidwankhede/FiscalAgent
+    url_live: https://fiscalagent.onrender.com/
+    stack: [Python, Flask, LLM]
+    verified: true
+    facts:
+      - claim: "financial Q&A chatbot prototype over financial data"
+    note: "Prototype — label it as such. Use for fintech-adjacent roles."
+
+  - id: fake_news
+    name: Fake News Detection
+    url_repo: https://github.com/yogvidwankhede/Fake_News_Detection
+    stack: [scikit-learn, PassiveAggressiveClassifier, NLP, Heroku]
+    verified: true
+    facts:
+      - claim: "fake-news classifier over news headlines using a PassiveAggressiveClassifier, deployed on Heroku"
+
+  - id: blumiin
+    name: "Blumiin: herbal-discovery site with AI wellness assessment"
+    url_repo: https://github.com/yogvidwankhede/blumiin
+    stack: [JavaScript, Groq, serverless]
+    verified: true
+    facts:
+      - claim: "herbal-discovery site with an AI-personalized wellness assessment powered by Groq, on serverless infrastructure"
+
+  - id: minor_repos
+    name: Additional public repositories
+    verified: true
+    note: "Real but thin — use only as supporting evidence, never as a headline project."
+    items:
+      - "Educational-Resource-Management — Python resource management system"
+      - "whatsapp-bot — Python WhatsApp automation bot"
+      - "EDA — exploratory data analysis notebooks (pandas, Jupyter)"
+      - "OIBSIP — Oasis Infobyte internship project notebooks"
+      - "Portfolio — personal portfolio website (HTML/CSS/JS)"
+      - "yogvidwankhede — animated GitHub profile README (HTML, SVG animation)"
+      - "Personal — personal experiments"
+      - "forage-walmart-task-4 — Forage program starter repo (FORK, do not claim)"
+      - "forage-midas — JPMC Advanced Software Engineering Forage program (FORK, do not claim)"
+
+# ---------------------------------------------------------------------------
+publications:
+  - id: pub_springer
+    venue: Springer Nature Singapore
+    type: book chapter
+    topic: "Dynamic Time Warping method for real-time sign-language interpretation"
+    doi_path: 10.1007/978-981-97-1488-9_7
+    url: https://link.springer.com/chapter/10.1007/978-981-97-1488-9_7
+    verified: true
+  - id: pub_ijsrd
+    venue: "IJSRD (International Journal for Scientific Research & Development)"
+    type: journal article
+    topic: "temporal analysis and forecasting of cyber-attack intensity"
+    url: https://mail.ijsrd.com/Article.php?manuscript=IJSRDV12I30191
+    verified: true
+
+awards:
+  - name: "Top 10 — OpenAI Handshake competition"
+    project_ref: ventureos
+    note: "Top 10, not top 3. State it exactly."
+    verified: true
+  - name: Certificate of Appreciation
+    issuer: Chetana Bahuuddeshiya Sanstha
+    context: volunteering
+    verified: true
+
+volunteering:
+  - organization: Chetana Bahuuddeshiya Sanstha (NGO)
+    role: Volunteer
+    focus: Health
+    start: 2023-02
+    end: 2023-03
+    detail: "health camps and hygiene-awareness sessions for underserved communities at the Help Community Health Center"
+    verified: true
+    note: "Real volunteering. Include for public-health / civic / nonprofit-facing roles. Never generalize it to 'community organizations' plural."
+  - organization: "UMANG: UVic Indian Students' Association"
+    role: Social Media Manager
+    start: 2026-01
+    end: present
+    verified: true
+
+# ---------------------------------------------------------------------------
+# SKILLS — union of everything supported by an experience or project entry.
+# The `evidence` field is what makes a skill claimable. A skill with no
+# evidence entry must not appear on a resume.
+skills:
+  languages:
+    Python:        [euno, asterisc, oasis, healthmate, pyshell, http_server, pygrep]
+    TypeScript:    [euno, vishwakarma]
+    JavaScript:    [euno, ventureos, blumiin, private_dns]
+    SQL:           [safetechno, asterisc]
+    R:             [education]
+    Java:          [education]
+    C/C++:         [education]
+    MATLAB:        [wustl_med]
+  llm_and_agents:
+    Claude API:            [euno, vishwakarma]
+    LangGraph / LangGraph.js: [euno]
+    LangChain:             [ventureos, law_gpt]
+    Agent Orchestration:   [euno, ventureos]
+    RAG:                   [euno, healthmate, law_gpt]
+    Prompt Engineering:    [euno, vishwakarma]
+    Evals:                 [euno, healthmate]
+    MCP:                   [vishwakarma]
+    Structured Output / JSON Schema: [euno]
+    GPT-4o / GPT-4o-mini:  [euno, healthmate, law_gpt]
+    Claude Haiku 4.5:      [euno]
+    Gemini:                [ventureos]
+    Mistral:               [healthmate]
+    Groq:                  [blumiin]
+  ml_and_stats:
+    scikit-learn:      [asterisc, oasis, fake_news]
+    XGBoost:           [education]
+    TensorFlow:        [image_captioning]
+    PyTorch:           [healthmate]
+    Random Forest:     [asterisc]
+    LSTM:              [asterisc]
+    ARIMA:             [asterisc, oasis]
+    Dynamic Time Warping: [asterisc, sign_language]
+    LoRA fine-tuning:  [healthmate]
+    sentence-transformers: [healthmate]
+    Transformers:      [image_captioning, sentiment_api]
+    Computer Vision:   [image_captioning, sign_language]
+    NLP:               [healthmate, sentiment_api, fake_news, sign_language]
+    MediaPipe:         [sign_language]
+    InceptionV3:       [image_captioning]
+    Imbalanced-class modeling: [asterisc]
+    Anomaly / Fraud detection: [asterisc]
+    Hypothesis Testing: [education]
+    ROC-AUC / Precision-Recall: [asterisc]
+    Inverse problems / Method of Fundamental Solutions: [wustl_med]
+    Signal processing: [wustl_med]
+  data_and_storage:
+    PostgreSQL:   [euno]
+    MySQL:        [safetechno]
+    MongoDB:      [education]
+    Apache Spark: [education]
+    Kafka:        [education]
+    Pandas:       [asterisc, oasis, healthmate]
+    NumPy:        [asterisc, oasis]
+    Pinecone:     [healthmate, law_gpt]
+    Vector search / embeddings: [euno, healthmate, law_gpt]
+  cloud_and_infra:
+    "GCP (Cloud Run, Cloud Tasks, Cloud Scheduler)": [euno]
+    "AWS (EC2, S3)":  [education]
+    Docker:           [image_captioning]
+    Kubernetes:       [education]
+    Redis / BullMQ:   [euno]
+    Flask:            [healthmate, law_gpt, sentiment_api, ventureos, fiscal_agent]
+    NestJS:           [euno]
+    REST APIs:        [euno, sentiment_api]
+    Git / GitHub:     [all]
+    Vercel:           [ventureos]
+    Heroku:           [fake_news]
+    Render:           [fiscal_agent]
+  analytics_and_viz:
+    Tableau:      [sales_dashboard, safetechno]
+    Power BI:     [safetechno]
+    Matplotlib:   [asterisc, oasis]
+    Seaborn:      [asterisc]
+    Excel:        [safetechno]
+    Dashboards:   [safetechno, sales_dashboard]
+  weak_evidence:
+    # Appeared on some resume versions but the evidence chain is thin.
+    # Include only if the candidate confirms hands-on use.
+    - Hadoop
+    - Hive
+    - Azure
+    - Apache Spark
+    - Kafka
+    - XGBoost
+
+# ---------------------------------------------------------------------------
+# Claims that were proposed at some point and MUST NOT be used.
+forbidden_claims:
+  - claim: "Claude Corps Fellow (or any title not actually held)"
+    reason: "Claiming a title the candidate does not hold."
+  - claim: "Analyzed Oil & Gas datasets for government agencies"
+    reason: "The SAFETECHNO clients were not government agencies. Suggested by a scoring tool; it is a lie."
+  - claim: "Volunteer work with local community organizations (plural / generic)"
+    reason: "One specific NGO, two months. Generalizing inflates it."
+  - claim: "Professional Development: Onboarding Bootcamp with Anthropic"
+    reason: "A perk that would be received if hired, not an accomplishment."
+  - claim: "Reframing the KDDCup 1999 work as public-health outbreak prediction on anonymized health records"
+    reason: "KDDCup 1999 is a network-intrusion dataset and the linked IJSRD paper disproves the reframing."
+  - claim: "Relevant coursework: Public Health Data Analysis / Civic Technology Applications"
+    reason: "Invented course titles."
+  - claim: "Implemented evals to cut inference cost ~40%"
+    reason: "False causality. Token budgeting and model routing cut the cost, not evals."
+  - claim: "HealthMate-AI built with agent frameworks"
+    reason: "HealthMate-AI is RAG, not agents."
+  - claim: "fine-tuned sentence-transformer ensemble model"
+    reason: "The 'ensemble' descriptor was dropped as inaccurate."
+  - claim: "Any Forage program starter repo presented as original work"
+    reason: "forage-walmart-task-4 and forage-midas are forks of provided starter repos."
+
+# ---------------------------------------------------------------------------
+open_questions:
+  - "Teaching Assistant date range: Aug 2025–Jan 2026 or Sep 2025–Feb 2026?"
+  - "SAFETECHNO employment type: full-time or part-time?"
+  - "EUNO heartbeat infrastructure: GCP Cloud Tasks, BullMQ/Redis, or both?"
+  - "EUNO RAG safeguards: 'in-code authorization' or 'row-level security'?"
+  - "PyGrep: CLI + regex engine, VS Code extension, or both?"
+  - "Which Anthropic certificate URL maps to which certificate?"

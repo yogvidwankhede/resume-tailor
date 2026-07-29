@@ -1,0 +1,168 @@
+%% ===========================================================================
+%% CANONICAL RESUME TEMPLATE — LaTeX master (layout source of truth)
+%% ---------------------------------------------------------------------------
+%% Requires the classic `resume.cls` (Sourav Das / plasmati-style article wrapper
+%% providing \name, \address, and the rSection environment). Keep resume.cls
+%% next to this file. If it is missing, see references/latex-formatting.md
+%% § "Building without resume.cls" for the drop-in replacement.
+%%
+%% The tuning below is the result of a measured sweep, not taste. Do not
+%% "clean it up" — every negative \vspace is load-bearing. See
+%% references/latex-formatting.md before changing a single number.
+%% ===========================================================================
+
+\documentclass{resume}
+
+% ---- Layout tuning --------------------------------------------------------
+\makeatletter
+\input{size10.clo}          % force the 11pt class down to 10pt WITHOUT changing
+\makeatother                % \documentclass (which resume.cls doesn't accept)
+
+% geometry MUST load AFTER the font change, or it will not own the page margins
+\usepackage[left=0.3in,top=0.14in,right=0.3in,bottom=0.13in]{geometry}
+
+% ---- ATS text-extraction fixes (DO NOT REMOVE) ----------------------------
+% Without these three lines the PDF renders correctly but EXTRACTS wrong:
+% the fi/fl/ffi ligatures come out as missing glyphs, so "Artificial
+% Intelligence" is read by every ATS as "Articial Intelligence", and
+% "Certifications", "classifier", "classification" and "Thévenin" all break.
+% cmap must be loaded before fontenc to avoid the "fontenc already loaded"
+% warning leaving some fonts unprocessed.
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+% ---------------------------------------------------------------------------
+
+\usepackage[hidelinks]{hyperref}  % hidelinks => no coloured boxes; ATS-safe
+\usepackage{enumitem}
+\setlist[itemize]{nosep, left=0pt}
+
+\newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+
+\renewcommand{\namesize}{\LARGE}          % was \huge
+\renewcommand{\nameskip}{\smallskip}      % was \bigskip
+\renewcommand{\addressskip}{\smallskip}
+\renewcommand{\sectionskip}{\smallskip}   % was \medskip
+\renewcommand{\sectionlineskip}{\smallskip}
+
+\linespread{1.0}            % 1.0 is final. The 0.86/0.88/0.90/0.92 sweep was a
+                            % dead end — tightening leading looks cramped and
+                            % buys less than cutting one bullet.
+\setlength{\parindent}{0pt} % flush-left paragraphs; this is the ONLY correct fix
+                            % for the indented-first-heading bug (not \noindent,
+                            % not \null, not \vspace*)
+% ---------------------------------------------------------------------------
+
+\name{Yogvid Wankhede}
+\address{+1(909) 705-0369 \ $|$ \ \href{mailto:yogvidwankhede@gmail.com}{yogvidwankhede@gmail.com} \ $|$ \ \href{https://www.linkedin.com/in/yogvidwankhede}{LinkedIn} \ $|$ \ \href{https://github.com/yogvidwankhede}{GitHub} \ $|$ \ \href{https://www.yogvidwankhede.com}{yogvidwankhede.com}}
+
+\begin{document}
+\fontsize{9.5}{10.0}\selectfont   % BODY FONT. 9.5pt is the floor you defend.
+                                  % If it doesn't fit, cut content — never drop
+                                  % below 9.5pt to buy space.
+\vspace{-0.7em}
+
+%----------------------------------------------------------------------------
+\begin{rSection}{\large EDUCATION}
+\vspace{-0.8em}
+{\bf Master of Science}, Data Analytics \& Statistics \hfill {August 2024 - May 2026}\\
+Washington University in St. Louis\\[0.35em]
+{\bf Bachelor of Technology}, Artificial Intelligence \hfill {August 2020 - June 2024}\\
+G.H. Raisoni College of Engineering\\[0.35em]
+% SWAP SLOT: Certifications line | Coursework line | omit entirely
+{\bf Certifications}: \href{https://verify.skilljar.com/c/yp7j38kd9euw}{AI Fluency}, \ \href{https://verify.skilljar.com/c/dz4rus7u6q7t}{Claude 101} \ (Anthropic) --- proof of completion verified
+\vspace{-0.7em}
+\end{rSection}
+
+%----------------------------------------------------------------------------
+\begin{rSection}{\large SKILLS}
+\vspace{-0.95em}
+% Row spacing in a tabular comes from the \\ optional argument, e.g. \\[0.2em].
+% A bare \vspace between rows gets absorbed into the next row's first cell.
+\begin{tabular}{ @{} >{\bfseries}l @{\hspace{3ex}} l }
+Programming & Python, SQL, R, Java, C/C++, JavaScript, TypeScript \\[0.2em]
+LLM \& Agent Frameworks & Claude API, LangGraph, Agent Orchestration, Automation, RAG, Prompt Engineering, Evals \\[0.2em]
+ML \& Data Science & TensorFlow, PyTorch, Scikit-learn, XGBoost, NLP, Computer Vision, Pandas, NumPy \\[0.2em]
+Data \& Visualization & Apache Spark, Kafka, MySQL, PostgreSQL, MongoDB, Tableau, Power BI, Matplotlib \\[0.2em]
+Cloud \& Tools & AWS (EC2, S3), Azure, GCP, Docker, Kubernetes, Flask API, Git, GitHub \\
+\end{tabular}
+\vspace{-0.8em}
+\end{rSection}
+
+%----------------------------------------------------------------------------
+\begin{rSection}{\large EXPERIENCE}
+\vspace{-0.9em}
+
+\textbf{Software Engineering Intern}, EUNO (The Epiphany Company, LLC) \hfill June 2026 - Present
+\vspace{-0.5em}
+\begin{itemize}[itemsep=1.5pt, topsep=2pt]
+    \item Build a 6-stage LLM reasoning pipeline on the LangGraph.js agent framework (NestJS, TypeScript), turning raw conversation into structured per-user knowledge via strict JSON schemas, reaching $\sim$98\% valid structured-output parsing
+    \item Engineer cost-aware multi-model orchestration across GPT-4o-mini and Claude Haiku 4.5 with per-call token budgeting, cutting inference cost $\sim$40\% to sub-\$0.002 per cycle
+    \item Ship the autonomous ``heartbeat'' automation onto GCP (Cloud Scheduler $\rightarrow$ Cloud Run $\rightarrow$ Cloud Tasks), running 2 daily cycles with trigger gates and tension-scoring over 100+ signals; author runbooks and operational documentation so teammates can own the system after handoff
+\end{itemize}
+\vspace{0.15em}
+
+\textbf{Research Assistant}, Washington University School of Medicine \hfill January 2026 - June 2026
+\vspace{-0.5em}
+\begin{itemize}[itemsep=1.5pt, topsep=2pt]
+    \item Implemented the Method of Fundamental Solutions for inverse electrocardiographic imaging, cutting computation time 40\% vs the Boundary Element Method while improving correlation 0.85$\rightarrow$0.92 and reducing error 0.97$\rightarrow$0.47
+    \item Developed the EMMI system combining MRI geometry with 256-channel recordings for noninvasive 3D uterine contraction mapping at 31$\pm$8mm and 2048 Hz resolution
+    \item Validated reconstruction across 118 pacing episodes (median CC=0.83, 2.9-16.5mm localization error), robust under 10\% noise and $\pm$1cm geometric perturbation, for preterm labor prediction
+\end{itemize}
+\vspace{0.15em}
+
+\textbf{Teaching Assistant}, Washington University in St. Louis \hfill August 2025 - January 2026
+\vspace{-0.5em}
+\begin{itemize}[itemsep=1.5pt, topsep=2pt]
+    \item Led weekly labs and recitations for 40+ undergraduates, translating abstract quantitative theory into practical intuition for a mixed-ability audience
+    \item Held office hours and one-on-one mentoring, sharpening the ability to explain technical ideas clearly to non-experts
+\end{itemize}
+\vspace{0.15em}
+
+\textbf{Data Science Intern}, ASTERISC \hfill December 2023 - June 2024
+\vspace{-0.5em}
+\begin{itemize}[itemsep=1.5pt, topsep=2pt]
+    \item Developed a cyber-attack forecasting system (ARIMA, LSTM, Random Forest) on KDDCup 1999 (494K+ records), achieving 95.4\% accuracy at a 0.6\% false-positive rate across 9 attack types
+    \item Deployed a Dynamic Time Warping classifier at 88.3\% accuracy with a 4-8 day lead time; led the research initiative resulting in {\href{https://mail.ijsrd.com/Article.php?manuscript=IJSRDV12I30191}{publication in IJSRD}} on temporal analysis and forecasting of attack intensity
+\end{itemize}
+\vspace{0.15em}
+
+\textbf{Data Analyst}, SAFETECHNO SERVICES \hfill January 2021 - December 2023
+\vspace{-0.5em}
+\begin{itemize}[itemsep=1.5pt, topsep=2pt]
+    \item Analyzed Oil \& Gas project datasets across 15+ engineering, inspection, and certification projects, surfacing performance trends and operational risk patterns that informed management decisions
+    \item Established standardized data-tracking and reporting processes and built a dashboard, cutting report preparation time $\sim$30\% and improving accuracy, traceability, and retrieval
+\end{itemize}
+\vspace{-0.6em}
+\end{rSection}
+
+%----------------------------------------------------------------------------
+\begin{rSection}{\large PROJECTS}
+\vspace{-1.8em}   % larger pull-up than other sections: \item sits outside a list here
+
+\item \textbf{\href{https://github.com/yogvidwankhede/HealthMate-AI}{HealthMate-AI: RAG System with Domain-Adapted Embeddings for Medical Decision Support}}
+\vspace{-0.5em}
+\begin{itemize}[itemsep=1.5pt, topsep=2pt]
+    \item Architected a retrieval pipeline over 40K+ medical text chunks reaching 93.3\% retrieval accuracy with a {\href{https://huggingface.co/yogvidwankhede/healthmate-minilm-l6-v2-medical-3fold}{fine-tuned sentence-transformer}}
+    \item Fine-tuned embeddings with LoRA under 3-fold cross-validation (+18.31\% Spearman); ran head-to-head evals (GPT-4o vs Mistral, 75.96\% semantic similarity) to justify the production choice
+\end{itemize}
+\vspace{-0.21em}
+
+\item \textbf{\href{https://github.com/yogvidwankhede/Sign_Language_Interpreter}{Real-Time Sign Language Interpreter Using MediaPipe, Dynamic Time Warping, and NLP}}
+\vspace{-0.5em}
+\begin{itemize}[itemsep=1.5pt, topsep=2pt]
+    \item Shipped a real-time inference service at 92\% accuracy handling 500+ requests/day at $<$200ms latency, improving accessibility for the deaf community
+    \item Designed DTW temporal-similarity classification that beat an LSTM baseline by 11.7\%; published {\href{https://link.springer.com/chapter/10.1007/978-981-97-1488-9_7}{research in Springer Nature Singapore}}
+\end{itemize}
+\vspace{-0.21em}
+
+\item \textbf{\href{https://github.com/yogvidwankhede/Image-Captioning-System-Enhanced-with-a-TTS}{Image Captioning System with Text-to-Speech for Visual Accessibility}}
+\vspace{-0.5em}
+\begin{itemize}[itemsep=1.5pt, topsep=2pt]
+    \item Trained an InceptionV3 + Transformer model on MS COCO (70K+ images, 330K+ samples) for a 16\% precision gain over baseline attention; containerized with Docker at $<$300ms inference latency
+\end{itemize}
+\vspace{-1em}
+\end{rSection}
+
+\end{document}

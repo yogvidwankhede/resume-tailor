@@ -1,0 +1,148 @@
+================================================================================
+CANONICAL RESUME TEMPLATE — plaintext master
+================================================================================
+This file is the source of truth for CONTENT: section ordering, bullet grammar,
+density, and the plaintext form an ATS actually parses. `resume-master.tex` is
+the source of truth for LAYOUT.
+
+Everything the tailoring engine generates should follow this shape unless a
+tailoring decision requires deviating — and when it does, the report must say
+which rule was broken and why.
+
+Structural rules encoded below:
+  * One page. Five sections. No graphics, columns, tables-as-layout, or icons.
+  * Header is one line of contact info separated by " | ". No mailing address.
+  * EDUCATION leads while the candidate is a student or <2 years out.
+  * SKILLS sits above EXPERIENCE so the keyword block is in the top third.
+  * Each experience entry: TITLE, EMPLOYER, right-aligned date range, then
+    2–3 bullets. Most JD-relevant bullet first.
+  * Each project entry: a descriptive title that names the CAPABILITY, then
+    1–2 bullets.
+  * Bullets: one claim each, ~1–2 lines, verb-first, quantified where the
+    number is real.
+  * Dates: "Month YYYY - Month YYYY". Present roles end in "Present".
+  * Present tense for current roles, past tense for ended roles.
+--------------------------------------------------------------------------------
+
+
+YOGVID WANKHEDE
++1 (909) 705-0369 | yogvidwankhede@gmail.com | linkedin.com/in/yogvidwankhede | github.com/yogvidwankhede | yogvidwankhede.com
+
+
+EDUCATION
+--------------------------------------------------------------------------------
+Master of Science, Data Analytics & Statistics                    August 2024 - May 2026
+Washington University in St. Louis
+
+Bachelor of Technology, Artificial Intelligence                   August 2020 - June 2024
+G.H. Raisoni College of Engineering
+
+Certifications: AI Fluency, Claude 101 (Anthropic) - proof of completion verified
+[OPTIONAL LINE — swap for `Coursework:` when the JD rewards coursework, or drop
+ entirely when space is needed. Never carry both lines.]
+
+
+SKILLS
+--------------------------------------------------------------------------------
+[Five rows. Row LABELS are tailored to the JD, not just row contents — the label
+ is itself a keyword. First row and first item in each row are the highest-value
+ slots; put the JD's required stack there. Six rows costs more density than it
+ gains — merge two weak rows instead.]
+
+Programming              Python, SQL, R, Java, C/C++, JavaScript, TypeScript
+LLM & Agent Frameworks   Claude API, LangGraph, Agent Orchestration, Automation, RAG, Prompt Engineering, Evals
+ML & Data Science        TensorFlow, PyTorch, Scikit-learn, XGBoost, NLP, Computer Vision, Pandas, NumPy
+Data & Visualization     Apache Spark, Kafka, MySQL, PostgreSQL, MongoDB, Tableau, Power BI, Matplotlib
+Cloud & Tools            AWS (EC2, S3), Azure, GCP, Docker, Kubernetes, Flask API, Git, GitHub
+
+
+EXPERIENCE
+--------------------------------------------------------------------------------
+Software Engineering Intern, EUNO (The Epiphany Company, LLC)      June 2026 - Present
+  - Build a 6-stage LLM reasoning pipeline on the LangGraph.js agent framework
+    (NestJS, TypeScript), turning raw conversation into structured per-user
+    knowledge via strict JSON schemas, reaching ~98% valid structured-output parsing
+  - Engineer cost-aware multi-model orchestration across GPT-4o-mini and Claude
+    Haiku 4.5 with per-call token budgeting, cutting inference cost ~40% to
+    sub-$0.002 per cycle
+  - Ship the autonomous "heartbeat" automation on GCP (Cloud Scheduler -> Cloud Run
+    -> Cloud Tasks), running 2 daily cycles with trigger gates and tension-scoring
+    over 100+ signals; author runbooks so teammates can own the system after handoff
+
+Research Assistant, Washington University School of Medicine    January 2026 - June 2026
+  - Implemented the Method of Fundamental Solutions for inverse electrocardiographic
+    imaging, cutting computation time 40% vs the Boundary Element Method while
+    improving correlation 0.85->0.92 and reducing error 0.97->0.47
+  - Developed the EMMI system combining MRI geometry with 256-channel recordings for
+    noninvasive 3D uterine contraction mapping at 31+/-8mm and 2048 Hz resolution
+  - Validated reconstruction across 118 pacing episodes (median CC=0.83,
+    2.9-16.5mm localization error), robust under 10% noise, for preterm labor prediction
+
+Teaching Assistant, Washington University in St. Louis         August 2025 - January 2026
+  - Led weekly labs and recitations for 40+ undergraduates, translating abstract
+    quantitative theory into practical intuition for a mixed-ability audience
+  - Held office hours and one-on-one mentoring, sharpening the ability to explain
+    technical ideas clearly to non-experts
+
+Data Science Intern, ASTERISC                                 December 2023 - June 2024
+  - Developed a cyber-attack forecasting system (ARIMA, LSTM, Random Forest) on
+    KDDCup 1999 (494K+ records), achieving 95.4% accuracy at a 0.6% false-positive
+    rate across 9 attack types
+  - Deployed a Dynamic Time Warping classifier at 88.3% accuracy with a 4-8 day lead
+    time; led the research initiative resulting in publication in IJSRD on temporal
+    analysis and forecasting of attack intensity
+
+Data Analyst, SAFETECHNO SERVICES                             January 2021 - December 2023
+  - Analyzed Oil & Gas project datasets across 15+ engineering, inspection, and
+    certification projects, surfacing performance trends that informed management decisions
+  - Established standardized data-tracking and reporting processes and built a
+    dashboard, cutting report preparation time ~30% and improving traceability
+
+
+PROJECTS
+--------------------------------------------------------------------------------
+[2-3 entries. Title names the CAPABILITY, not just the toy name — the title is
+ prime keyword real estate. Retitle per JD.]
+
+HealthMate-AI: RAG System with Domain-Adapted Embeddings for Medical Decision Support
+  - Architected a retrieval pipeline over 40K+ medical text chunks reaching 93.3%
+    retrieval accuracy with a fine-tuned sentence-transformer
+  - Fine-tuned embeddings with LoRA under 3-fold cross-validation (+18.31% Spearman);
+    ran head-to-head evals (GPT-4o vs Mistral, 75.96% semantic similarity) to justify
+    the production choice
+
+Real-Time Sign Language Interpreter Using MediaPipe, Dynamic Time Warping, and NLP
+  - Shipped a real-time inference service at 92% accuracy handling 500+ requests/day
+    at <200ms latency, improving accessibility for the deaf community
+  - Designed DTW temporal-similarity classification that beat an LSTM baseline by
+    11.7%; published research in Springer Nature Singapore
+
+Image Captioning System with Text-to-Speech for Visual Accessibility
+  - Trained an InceptionV3 + Transformer model on MS COCO (70K+ images, 330K+ samples)
+    for a 16% precision gain over baseline attention; containerized with Docker at
+    <300ms inference latency
+
+
+================================================================================
+SLOT INVENTORY — what the tailoring engine is allowed to swap
+================================================================================
+HEADER      fixed, except: add city when the JD is location-sensitive; drop the
+            portfolio link when space is critically tight (drop LinkedIn last —
+            recruiters click it).
+
+EDUCATION   fixed content. The third line is a swap slot:
+              Certifications: ... | Coursework: ... | (omitted)
+
+SKILLS      fully tailorable — row labels, row order, item order, item inclusion.
+            Constraint: every item must have an `evidence` entry in truth-base.yaml.
+
+EXPERIENCE  role inclusion, role order (reverse-chronological by default; never
+            reorder out of chronology), bullet selection, bullet order, bullet
+            wording. Titles may use a `title_variant` from the ledger. Dates,
+            employers, and the fact behind each bullet are frozen.
+
+PROJECTS    fully tailorable — which projects, their order, their titles, their
+            bullets. This is the highest-leverage section for a pivot.
+
+SUMMARY     absent by default. Insert between HEADER and EDUCATION only when
+            Stage 8's conditions are met.
