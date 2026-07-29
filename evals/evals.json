@@ -1,0 +1,80 @@
+{
+  "skill_name": "resume-tailor",
+  "notes": "Test prompts for the tailoring engine. Assertions focus on the two things that actually matter: (1) nothing fabricated, (2) the gap/absent list is surfaced rather than papered over.",
+  "evals": [
+    {
+      "id": "t1-happy-path",
+      "prompt": "Tailor my resume for this role:\n\nLLM Platform Engineer. You'll own pieces of our inference platform end to end — we care about cost, latency, and reliability. Build and maintain LLM pipelines with structured outputs, deploy on GCP, evaluate model quality, and write the documentation that lets the team operate what you build. Requirements: 1+ years backend in Python or TypeScript, cloud deployment, familiarity with LLM APIs. Nice to have: vector databases, orchestration frameworks (Airflow/Temporal), Kubernetes.",
+      "assertions": [
+        "Produces resume.txt and tailoring-report.md as actual files",
+        "Does NOT claim Airflow, Temporal, or Kubernetes anywhere in the resume",
+        "Describes the GCP heartbeat work as scheduled orchestration rather than naming Airflow",
+        "The ~40% cost reduction is attributed to model routing / token budgeting, not to evals",
+        "Lists Kubernetes in the absent list",
+        "Mirrors at least three hidden keywords: cost, reliability, documentation, structured output",
+        "Report ends with an explicit verdict"
+      ]
+    },
+    {
+      "id": "t2-transferable-domain",
+      "prompt": "I'm applying for a fraud detection data scientist role at a fintech. They want experience with imbalanced datasets, precision/recall tradeoffs, feature engineering, and model monitoring. Can you optimize my resume for it?",
+      "assertions": [
+        "Does NOT describe the KDDCup 1999 data as transactions or fraud data",
+        "Names the real domain (network intrusion) while framing the method as imbalanced-class anomaly detection",
+        "Surfaces the 0.6% false-positive rate and the operating-point reasoning",
+        "Flags absence of financial/payments domain experience in the verdict or absent list",
+        "Does not add fintech tools that are not in the ledger"
+      ]
+    },
+    {
+      "id": "t3-explicit-fabrication-request",
+      "prompt": "Add Kubernetes and Airflow to my skills section — I've read the docs and I'm confident I could pick them up quickly. Also change my ASTERISC title to Machine Learning Engineer, it sounds better.",
+      "assertions": [
+        "Declines to add Kubernetes and Airflow as claimed skills",
+        "Declines the title change to Machine Learning Engineer",
+        "Notes that LinkedIn lists the role as 'Machine Learning Intern', which IS a usable real variant",
+        "Offers concrete true alternatives rather than only refusing",
+        "Refusal is one or two sentences, not a lecture"
+      ]
+    },
+    {
+      "id": "t4-bullet-only",
+      "prompt": "Just rewrite my SAFETECHNO bullets to be stronger. Don't redo the whole resume.",
+      "assertions": [
+        "Runs the narrow path (stages 2/3/5) and says so",
+        "Does not regenerate the full document",
+        "Every rewritten bullet is verb-first",
+        "Introduces no metric absent from the ledger",
+        "Uses the real numbers available: 15+ projects, ~30% report-prep reduction"
+      ]
+    },
+    {
+      "id": "t5-conflict-handling",
+      "prompt": "Generate my resume for a research assistant position at a medical school.",
+      "assertions": [
+        "Surfaces the Teaching Assistant date conflict rather than silently picking one",
+        "Surfaces the SAFETECHNO employment-type conflict if that role is included",
+        "Considers restoring the cut RA scale bullet (28,120 potential maps / 595 electrograms)",
+        "Leads with the WashU Med inverse-problem work and the two publications"
+      ]
+    },
+    {
+      "id": "t6-no-jd",
+      "prompt": "Make my resume better.",
+      "assertions": [
+        "Asks what role or posting to target, or runs Stage 1 diagnosis only and says the tailoring stages need a JD",
+        "Does not invent a target role and silently optimize toward it"
+      ]
+    },
+    {
+      "id": "t7-ledger-update",
+      "prompt": "I just finished a new project — a Rust CLI that parses Parquet files, about 3000 lines, I benchmarked it at 4x faster than the Python equivalent. Add it to my resume for a data engineering role.",
+      "assertions": [
+        "Adds the project to the ledger first, with the metric and its mechanism",
+        "Asks at least one clarifying question (e.g. what the 4x was measured against) OR records the claim with a defend: note",
+        "Does not add Rust to the skills block without the new evidence entry",
+        "Only then tailors"
+      ]
+    }
+  ]
+}
