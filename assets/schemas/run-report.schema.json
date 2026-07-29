@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "resume-tailor/run-report.schema.json",
+  "title": "Tailoring Run Report",
+  "description": "Stage 9-11 output. The markdown report rendered to the user is a view over this object.",
+  "type": "object",
+  "required": ["verdict", "ats", "change_log", "absent", "deliverables"],
+  "additionalProperties": false,
+  "properties": {
+    "verdict": {
+      "type": "object",
+      "required": ["rating", "reason"],
+      "properties": {
+        "rating": { "enum": ["strong fit", "worth applying", "stretch", "misaligned"] },
+        "reason": { "type": "string" }
+      }
+    },
+    "ats": {
+      "type": "object",
+      "properties": {
+        "score": { "type": "number" },
+        "band": { "type": "string" },
+        "components": { "type": "object", "additionalProperties": { "type": "number" } },
+        "missing_required": { "type": "array", "items": { "type": "string" } },
+        "missing_preferred": { "type": "array", "items": { "type": "string" } },
+        "missing_hidden": { "type": "array", "items": { "type": "string" } },
+        "possible_stuffing": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "recruiter_review": {
+      "type": "object",
+      "properties": {
+        "scan_lands_on": { "type": "array", "items": { "type": "string" } },
+        "title_inferable": { "type": "boolean" },
+        "most_likely_prove_it": { "type": "string" },
+        "credibility_flags": { "type": "array", "items": { "type": "string" } },
+        "would_cut": { "type": "array", "items": { "type": "string" } },
+        "likely_rejection_reason": { "type": "string" }
+      }
+    },
+    "change_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["before", "after", "reason"],
+        "properties": {
+          "section": { "type": "string" },
+          "fact_id": { "type": "string" },
+          "before": { "type": "string" },
+          "after": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "absent": {
+      "type": "array",
+      "description": "JD requirements with no ledger evidence. Drives cover-letter and learning recommendations.",
+      "items": {
+        "type": "object",
+        "required": ["requirement"],
+        "properties": {
+          "requirement": { "type": "string" },
+          "weight": { "type": "number" },
+          "recommendation": { "type": "string" }
+        }
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Unresolved ledger conflicts and unverified claims that must be settled before submission."
+    },
+    "interview_prep": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "claim": { "type": "string" },
+          "likely_question": { "type": "string" }
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "properties": {
+        "verify_truth_exit_code": { "type": "integer" },
+        "warnings": { "type": "array", "items": { "type": "string" } },
+        "pdf_extraction_ok": { "type": "boolean" },
+        "page_count": { "type": "integer" }
+      }
+    },
+    "deliverables": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

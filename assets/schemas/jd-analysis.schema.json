@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "resume-tailor/jd-analysis.schema.json",
+  "title": "Job Description Analysis",
+  "description": "Structured output of Stage 2. Consumed by the gap analysis (Stage 3) and the ATS scorer (Stage 9).",
+  "type": "object",
+  "required": ["source", "role_title", "required_skills", "responsibilities", "seniority"],
+  "additionalProperties": false,
+  "properties": {
+    "source": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["pasted_text", "url", "screenshot", "generic_profile"] },
+        "url": { "type": "string" },
+        "company": { "type": "string" },
+        "retrieved_at": { "type": "string" },
+        "note": {
+          "type": "string",
+          "description": "Set to GENERIC_PROFILE when working from a title alone."
+        }
+      }
+    },
+    "role_title": { "type": "string" },
+    "role_family": {
+      "type": "string",
+      "description": "e.g. ml-engineer, data-scientist, backend, llm-platform, analyst, research"
+    },
+    "seniority": {
+      "enum": ["intern", "new-grad", "junior", "mid", "senior", "staff", "lead", "unknown"]
+    },
+    "industry": { "type": "string" },
+    "company_stage": {
+      "enum": ["seed", "early-startup", "growth", "public", "enterprise", "academic", "government", "nonprofit", "unknown"]
+    },
+    "required_skills": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "From the Requirements block, plus anything phrased as a necessity in Responsibilities."
+    },
+    "preferred_skills": { "type": "array", "items": { "type": "string" } },
+    "hidden_keywords": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Terms recurring >=2x in the Responsibilities/About prose but absent from the Requirements list. Highest-leverage terms in the posting."
+    },
+    "responsibilities": { "type": "array", "items": { "type": "string" } },
+    "soft_skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["skill", "jd_phrase"],
+        "properties": {
+          "skill": { "type": "string" },
+          "jd_phrase": { "type": "string" },
+          "ledger_evidence": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "ats_terms": {
+      "type": "array",
+      "description": "Exact strings a parser is likely to match, including every spelling variant the posting uses.",
+      "items": {
+        "type": "object",
+        "required": ["canonical"],
+        "properties": {
+          "canonical": { "type": "string" },
+          "jd_spelling": { "type": "string" },
+          "variants": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "vocabulary_fingerprint": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "The employer's house words for ordinary things. Mirror these wherever a true statement supports the word."
+    },
+    "dealbreakers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "detail"],
+        "properties": {
+          "kind": { "enum": ["work_authorization", "clearance", "location", "degree", "years_experience", "licence", "other"] },
+          "detail": { "type": "string" },
+          "candidate_meets": { "enum": ["yes", "no", "unknown"] }
+        }
+      }
+    },
+    "weights": {
+      "type": "object",
+      "description": "term -> numeric weight. Required+repeated 3.0, required 2.0, hidden 1.5, preferred 1.0, framing 0.5.",
+      "additionalProperties": { "type": "number" }
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "resume-tailor/tailoring-plan.schema.json",
+  "title": "Tailoring Plan",
+  "description": "Stage 3-4 output: the gap table plus the selection/ordering decisions, made BEFORE any prose is written.",
+  "type": "object",
+  "required": ["gap_table", "selection", "vocabulary_map"],
+  "additionalProperties": false,
+  "properties": {
+    "gap_table": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["requirement", "status"],
+        "properties": {
+          "requirement": { "type": "string" },
+          "weight": { "type": "number" },
+          "ledger_evidence": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Fact ids from truth-base.yaml, e.g. euno.cost"
+          },
+          "status": { "enum": ["direct", "adjacent", "transferable", "absent"] },
+          "action": { "type": "string" },
+          "bridge_phrasing": {
+            "type": "string",
+            "description": "For adjacent/transferable: the honest phrasing that makes the mapping legible without naming a tool that wasn't used."
+          }
+        }
+      }
+    },
+    "selection": {
+      "type": "object",
+      "required": ["experience", "projects", "skills_rows"],
+      "properties": {
+        "section_order": {
+          "type": "array",
+          "items": { "enum": ["SUMMARY", "EDUCATION", "SKILLS", "EXPERIENCE", "PROJECTS", "PUBLICATIONS"] }
+        },
+        "include_summary": { "type": "boolean" },
+        "summary_reason": { "type": "string" },
+        "experience": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["role_id", "bullet_count"],
+            "properties": {
+              "role_id": { "type": "string" },
+              "title_variant": { "type": "string" },
+              "bullet_count": { "type": "integer", "minimum": 1, "maximum": 4 },
+              "fact_ids_ordered": { "type": "array", "items": { "type": "string" } },
+              "rationale": { "type": "string" }
+            }
+          }
+        },
+        "projects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["project_id", "title_variant"],
+            "properties": {
+              "project_id": { "type": "string" },
+              "title_variant": { "type": "string" },
+              "bullet_count": { "type": "integer", "minimum": 1, "maximum": 3 },
+              "score": { "type": "number" }
+            }
+          }
+        },
+        "skills_rows": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": ["label", "items"],
+            "properties": {
+              "label": { "type": "string" },
+              "items": { "type": "array", "items": { "type": "string" }, "maxItems": 9 }
+            }
+          }
+        },
+        "cuts": {
+          "type": "array",
+          "description": "What was removed relative to the master template, and why.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "item": { "type": "string" },
+              "reason": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "vocabulary_map": {
+      "type": "array",
+      "description": "Ledger concept -> the JD's word for it. Only entries where a true statement already supports the word.",
+      "items": {
+        "type": "object",
+        "required": ["ledger_term", "jd_term"],
+        "properties": {
+          "ledger_term": { "type": "string" },
+          "jd_term": { "type": "string" },
+          "supporting_fact_id": { "type": "string" }
+        }
+      }
+    }
+  }
+}
