@@ -106,6 +106,13 @@ be overlooked: **the gap is often not a gap, it's a previous space cut.**
 
 ---
 
+## Resolved
+
+**Teaching Assistant dates: August 2025 - January 2026.** Confirmed by the candidate on
+2 August 2026. Older drafts carrying Sep 2025 - Feb 2026 are wrong. Do not reintroduce.
+
+---
+
 ## Unresolved conflicts
 
 These must be settled before submission. Each is a factual claim where two sources
@@ -114,7 +121,6 @@ everything else on the page.
 
 | Item | Options | Note |
 |---|---|---|
-| Teaching Assistant dates | Aug 2025 – Jan 2026 **vs** Sep 2025 – Feb 2026 | LinkedIn and the most recent resume both say Aug–Jan; older drafts say Sep–Feb |
 | SAFETECHNO employment type | Full-time (LinkedIn) **vs** Part-Time (recent resume) | Material — three years full-time reads very differently |
 | EUNO heartbeat infrastructure | GCP Cloud Tasks **vs** BullMQ/Redis | Possibly both; confirm before naming only one |
 | EUNO RAG safeguards | "in-code authorization" **vs** "row-level security" | Pick the one that is literally true |
