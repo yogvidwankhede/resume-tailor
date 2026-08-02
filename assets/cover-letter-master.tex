@@ -1,0 +1,88 @@
+%% ===========================================================================
+%% CANONICAL COVER LETTER TEMPLATE
+%% ---------------------------------------------------------------------------
+%% Shares the resume's font, margins, and ATS preamble so the pair reads as one
+%% application. Stock `article` — no resume.cls dependency.
+%%
+%% Placeholders in <ANGLE BRACKETS> are filled per application. Every factual
+%% claim must trace to assets/truth-base.yaml, exactly as in the resume.
+%% verify_truth.py runs against this file too.
+%% ===========================================================================
+
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage[left=0.9in,top=0.7in,right=0.9in,bottom=0.7in]{geometry}
+
+% ---- ATS text-extraction fixes (DO NOT REMOVE) ----------------------------
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+% ---------------------------------------------------------------------------
+
+\usepackage[hidelinks]{hyperref}
+\usepackage{parskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+\linespread{1.05}
+
+\begin{document}
+\fontsize{10.5}{13}\selectfont
+
+%---------------------------------------------------------------- letterhead
+{\LARGE\bfseries Yogvid Wankhede}\\[0.35em]
++1 (909) 705-0369 \ $|$ \ \href{mailto:yogvidwankhede@gmail.com}{yogvidwankhede@gmail.com} \ $|$ \
+\href{https://www.linkedin.com/in/yogvidwankhede}{LinkedIn} \ $|$ \
+\href{https://github.com/yogvidwankhede}{GitHub} \ $|$ \
+\href{https://www.yogvidwankhede.com}{yogvidwankhede.com}
+
+\vspace{0.6em}
+\hrule
+\vspace{1.2em}
+
+<MONTH DAY, YEAR>
+
+\vspace{0.8em}
+
+<HIRING TEAM / HIRING MANAGER NAME IF KNOWN>\\
+<COMPANY NAME>
+
+\vspace{1.0em}
+
+Dear <HIRING MANAGER NAME, or "Hiring Team">,
+
+\vspace{0.4em}
+
+% --- 1. THE HOOK ----------------------------------------------------------
+% The role by name + the single strongest piece of ledger evidence that you can
+% do it. A specific number, not an adjective. Never "I am writing to apply for."
+<PARAGRAPH 1>
+
+% --- 2. THE PROOF ---------------------------------------------------------
+% Two or three sentences on the work that maps hardest onto the posting's
+% responsibilities. Same facts as the resume, different register: the resume
+% states the result, the letter explains the decision behind it. Do not restate
+% resume bullets verbatim.
+<PARAGRAPH 2>
+
+% --- 3. THE GAP, ADDRESSED ------------------------------------------------
+% The strongest `adjacent` or `absent` item from the gap analysis, in one honest
+% sentence: what you have done that is closest, and that you know the difference.
+% This is the paragraph that earns trust a resume alone cannot.
+<PARAGRAPH 3>
+
+% --- 4. THE COMPANY, SPECIFICALLY -----------------------------------------
+% One real, checkable thing about this employer — from the posting, their docs,
+% their product. Generic praise is worse than omitting the paragraph.
+<PARAGRAPH 4>
+
+\vspace{0.6em}
+
+Thank you for your time and consideration.
+
+\vspace{1.4em}
+
+Sincerely,\\[0.4em]
+Yogvid Wankhede
+
+\end{document}
