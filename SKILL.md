@@ -49,13 +49,20 @@ ATS term. Hidden keywords — the words recurring in the responsibilities prose 
 requirements list — are extracted and worked in. Treat every application as the highest-priority
 one.
 
-**6. Truthfulness is absolute and outranks rule 5.**
+**6. Cover letters carry no dashes and must not read as machine-written.**
+No em dashes, no en dashes, no dash-as-pause. Hyphens inside real compound words stay. Avoid the
+banned vocabulary and the banned sentence shapes, use contractions, vary sentence length hard,
+include one concrete detail only this candidate could write, and state one limitation plainly.
+Full rules in Stage 8b.1 and 8b.2 — read them before drafting any letter.
+
+**7. Truthfulness is absolute and outranks rules 5 and 6.**
 Reorder, reframe, compress, requantify from real data, retitle, regroup, and translate into the
 employer's vocabulary — freely. Never invent an employer, date, title, degree, certification,
 tool, metric, causal link, or scope. Never attribute a real metric to a mechanism that did not
 produce it. When maximizing alignment would require a fact the ledger lacks, find a true adjacent
-claim, ask the user a specific question, or leave the gap — never split the difference. Run
-`verify_truth.py` before delivering; a non-zero exit is a blocker, not a warning.
+claim, ask the user a specific question, or leave the gap — never split the difference. Voice
+rules govern how a true thing is said, never what is said. Run `verify_truth.py` before
+delivering; a non-zero exit is a blocker, not a warning.
 
 ---
 
@@ -284,6 +291,66 @@ Four paragraphs, under one page, no filler:
 Rules: no "I believe I would be a great fit", no restating the resume, no adjective inflation,
 and every claim traceable to the ledger exactly as in the resume. `verify_truth.py` runs against
 the cover letter too.
+
+#### 8b.1 — No dashes
+
+The cover letter contains **no em dashes (—) and no en dashes (–)**, and no dash used as a
+parenthetical or a dramatic pause. This is the single most recognizable machine-writing tell, and
+a letter free of it reads noticeably more like a person typed it.
+
+Recast instead of substituting. A dash almost always marks a place where two thoughts were welded
+together; splitting them usually improves the sentence anyway.
+
+- dash as pause → full stop, and start a new sentence
+- dash as aside → commas, or move the aside into its own sentence
+- dash as "namely" → colon, or just say it directly
+- dash pair as brackets → commas, or cut the aside entirely
+
+Hyphens **inside real compound words stay** — `cost-aware`, `6-stage`, `fine-tuned`, `sub-$0.002`.
+Removing those would be a misspelling, not a style choice. The rule is about dashes as
+punctuation, not hyphens as spelling. Also avoid the slash-as-conjunction (`design/build`) for the
+same reason.
+
+#### 8b.2 — Write like a person, not a model
+
+Machine-written prose fails in consistent, recognizable ways. Avoid each of these deliberately:
+
+**Banned words and phrases.** delve, leverage, robust, landscape, realm, testament, underscore,
+pivotal, meticulous, seamless, spearheaded, showcase, tapestry, resonate, navigate (figurative),
+foster, myriad, plethora, "in today's fast-paced", "it's not just X, it's Y", "I am writing to
+apply for", "I was excited to see", "I believe my background makes me", "passionate about",
+"proven track record", "align perfectly with", "I would love the opportunity to", "eager to
+contribute", "at the intersection of", "deep dive", "unlock", "empower", "journey".
+
+**Banned shapes.**
+- The rule of three used repeatedly. One list of three is fine; three of them in four paragraphs
+  is a fingerprint.
+- Perfect parallelism across consecutive sentences. Vary the construction on purpose.
+- The self-summarizing closer ("In closing, my combination of X and Y…"). Just stop.
+- Every paragraph the same length. Vary them.
+- Every sentence 18 to 25 words. Vary them hard: a 34-word sentence next to a 6-word one is what
+  human writing actually looks like.
+- Restating the company's own marketing language back at them.
+
+**What to do instead.**
+- Use contractions. `I've`, `didn't`, `it's`. Their absence reads as stiff.
+- Start a sentence with `And`, `But`, or `So` at least once. It is not a grammar error and it
+  breaks the metronome.
+- Include one concrete detail only this candidate could write: the thing that broke, the number
+  that surprised them, the choice they nearly got wrong. Specificity is the strongest human signal
+  available and it costs nothing in truthfulness because it comes from the ledger.
+- State one limitation plainly, without hedging around it (this is paragraph 3's job). A model
+  writing a cover letter never volunteers a weakness. A candidate worth hiring does.
+- Let one sentence be blunt and short.
+- Prefer the plain verb: `used` over `utilized`, `built` over `architected` unless the ledger
+  supports the stronger word, `cut` over `optimized`.
+
+**The read-aloud test.** Before delivering, read the letter as if speaking it. Any sentence you
+would not say out loud to a person gets rewritten. Sentences that sound like a press release, a
+LinkedIn post, or a performance review are all failures of the same kind.
+
+Truthfulness still outranks all of this. Voice is *how* the true thing is said, never *what* is
+said.
 
 ### Stage 9 — ATS Score Estimator
 
