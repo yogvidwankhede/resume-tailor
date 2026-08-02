@@ -1,10 +1,63 @@
 ---
 name: resume-tailor
-description: Tailor a resume to a specific job description without fabricating anything — analyze the JD, run a gap analysis against a verified fact ledger, rewrite bullets into quantified impact statements, reorder and regroup skills, generate a targeted summary, estimate ATS compatibility, run a recruiter critique, and emit a submission-ready one-page resume in TXT/Markdown/LaTeX/PDF. Use this skill whenever the user pastes or links a job posting, says "tailor my resume", "optimize my resume for this role", "make my resume ATS-friendly", "will this pass the ATS", "rewrite these bullets", "score my resume against this job", "should I apply", or asks for a resume, CV, cover-letter-adjacent summary, or LaTeX resume build — even if they don't say the word "tailor". Also use it when the user asks to add a new job, project, or metric to their resume, since the fact ledger must be updated first.
+description: Tailor a resume and cover letter to a specific job description without fabricating anything — analyze the JD, run a gap analysis against a verified fact ledger, rewrite bullets into quantified impact statements, reorder and regroup skills, retitle projects for the target role, estimate ATS compatibility, run a recruiter critique, and emit a submission-ready one-page resume as .tex and .pdf. Entry-level framing and no Professional Summary by default. Use this skill whenever the user pastes or links a job posting, says "tailor my resume", "optimize my resume for this role", "make my resume ATS-friendly", "will this pass the ATS", "rewrite these bullets", "score my resume against this job", "should I apply", or asks for a resume, CV, cover-letter-adjacent summary, or LaTeX resume build — even if they don't say the word "tailor". Also use it when the user asks to add a new job, project, or metric to their resume, since the fact ledger must be updated first.
 license: Complete terms in LICENSE.txt
 ---
 
 # Resume Tailor
+
+## CORE DIRECTIVE — read and apply this before doing anything else
+
+This block is the skill's default operating behaviour on **every** invocation, for **every**
+task, whether or not the user restates it. It is not a guideline and not a preset. It applies
+unless the user explicitly overrides a specific rule in the current request; an override of one
+rule leaves the others in force.
+
+**1. Entry-level framing is the default.**
+Target the posting as an early-career candidate. Use build/ship/implement verbs over
+scope-ownership verbs unless the ledger genuinely supports ownership. Education leads. Projects
+carry real weight. Never inflate a title, a team size, or a scope. Over-claiming at this career
+stage is the fastest way to lose credibility on the whole page.
+
+**2. Never include a Professional Summary.**
+No summary, objective, profile, or "About" block, in any form, under any heading. Stage 8 of the
+pipeline is **disabled by default**. Those lines go to a third experience bullet instead. Only
+generate a summary if the user asks for one by name in the current request.
+
+**3. Deliver `.tex` and `.pdf` only.**
+The deliverables are exactly: `resume.tex`, `resume.pdf`, and — whenever a cover letter is
+requested or the posting expects one — `cover_letter.tex`, `cover_letter.pdf`. Do not deliver
+`.txt`, `.md`, `.json`, tailoring reports, gap tables, change logs, or scratch files. Those
+artifacts are still **produced internally** because later stages depend on them; they are simply
+not surfaced. Compile every `.tex` to `.pdf` before delivering — a `.tex` without its `.pdf` is
+an incomplete deliverable.
+
+**4. Respond with the files, not with prose.**
+No walkthrough of what was changed, no section-by-section rationale, no summary of the
+optimization. Deliver the files and stop. The **one** exception, which overrides this rule
+because accuracy outranks brevity: if `verify_truth.py` fails, or an unresolved ledger
+`conflict:` affects something on the page, or a JD requirement is genuinely absent in a way that
+changes whether the application is worth submitting — say so in a few lines. Silence about a
+factual problem is not concision, it is a defect.
+
+**5. Maximize alignment with the specific posting.**
+Every section is optimized against the JD, not merely formatted: skills rows relabelled and
+reordered to the posting's own categories, projects selected and retitled for this role, bullets
+reordered so the strongest JD-relevant claim leads each entry, the employer's vocabulary mirrored
+wherever a true statement already supports the word, and the JD's exact spelling used for every
+ATS term. Hidden keywords — the words recurring in the responsibilities prose but absent from the
+requirements list — are extracted and worked in. Treat every application as the highest-priority
+one.
+
+**6. Truthfulness is absolute and outranks rule 5.**
+Reorder, reframe, compress, requantify from real data, retitle, regroup, and translate into the
+employer's vocabulary — freely. Never invent an employer, date, title, degree, certification,
+tool, metric, causal link, or scope. Never attribute a real metric to a mechanism that did not
+produce it. When maximizing alignment would require a fact the ledger lacks, find a true adjacent
+claim, ask the user a specific question, or leave the gap — never split the difference. Run
+`verify_truth.py` before delivering; a non-zero exit is a blocker, not a warning.
+
+---
 
 A truth-constrained resume optimization engine. It takes (1) a verified inventory of what
 the candidate has actually done and (2) a job description, and produces a resume that reads
@@ -50,8 +103,8 @@ HEADER  →  EDUCATION  →  SKILLS  →  EXPERIENCE  →  PROJECTS
 
 Reordering rules live in `references/writing-rules.md` § Section ordering. Short version:
 Education leads while the candidate is a student or <2 years out; the moment industry
-experience outweighs the degree, Experience moves above Education. A Summary is added only
-when the JD demands a pivot the bullets can't carry alone.
+experience outweighs the degree, Experience moves above Education. **No Summary** — Core
+Directive rule 2 removes it unconditionally.
 
 ---
 
@@ -70,10 +123,11 @@ Eleven stages. Run them in order — later stages depend on earlier artifacts. F
 | 5 | Bullet Rewriter | rewritten bullets |
 | 6 | Project Optimizer | project selection + rewrites |
 | 7 | Skills Optimizer | regrouped skills block |
-| 8 | Summary Generator | 2–3 line summary (conditional) |
+| 8 | Summary Generator | **disabled by default** (Core Directive 2) |
+| 8b | Cover Letter | `cover_letter.tex` (when requested) |
 | 9 | ATS Score Estimator | score + missing-term list |
 | 10 | Recruiter Review | 20-second-scan critique |
-| 11 | Final Generator | resume.txt / .md / .tex / .pdf |
+| 11 | Final Generator | `resume.tex` + `resume.pdf` (+ cover letter pair) |
 
 ### Stage 0 — Ledger build / verification
 
@@ -197,17 +251,39 @@ Reorder and regroup, never invent. Rules:
 - Drop tools that neither the JD nor the candidate's own bullets support. Every unsupported
   skill dilutes keyword density and invites an interview question with no good answer.
 
-### Stage 8 — Summary Generator
+### Stage 8 — Summary Generator — DISABLED BY DEFAULT
 
-Default: **no summary.** For a one-page early-career resume, a summary usually costs 3 lines
-that a third experience bullet would spend better. Add one only when:
+Core Directive rule 2 disables this stage. Produce no summary, objective, profile, or "About"
+block. The lines it would have cost go to a third experience bullet, which carries evidence
+instead of assertion.
 
-- the JD requires a pivot the bullets can't make obvious on their own,
-- there's a career-change / non-obvious domain jump to explain, or
-- the user asks.
-
-When included: 2–3 lines, no first person, no "results-driven professional". Structure —
+Run this stage **only** when the user asks for a summary by name in the current request. If they
+do: 2–3 lines, no first person, no "results-driven professional" — structure it as
 `[what you are] + [the two most JD-relevant proof points, with numbers] + [what you're aiming at].`
+
+### Stage 8b — Cover Letter
+
+Run whenever a cover letter is requested or the posting expects one. Build it from
+`assets/cover-letter-master.tex`, which shares the resume's font, margins, and ATS preamble so
+the pair reads as one application.
+
+Four paragraphs, under one page, no filler:
+
+1. **The hook.** The role by name, and the single strongest piece of evidence that you can do it —
+   a specific number from the ledger, not an adjective. No "I am writing to apply for."
+2. **The proof.** Two or three sentences on the work that maps hardest onto the posting's
+   responsibilities. Same facts as the resume, different register: the resume states the result,
+   the letter explains the decision behind it. Do not restate bullets verbatim.
+3. **The gap, addressed.** This is what makes a cover letter worth reading. Take the strongest
+   `adjacent` or `absent` item from the gap analysis and address it in one honest sentence — what
+   you have done that is closest, and that you know the difference. This paragraph is where an
+   entry-level application earns trust that a resume alone cannot.
+4. **The company, specifically.** One thing about this employer that is real and checkable — from
+   the posting, their docs, their product. Generic praise is worse than omitting the paragraph.
+
+Rules: no "I believe I would be a great fit", no restating the resume, no adjective inflation,
+and every claim traceable to the ledger exactly as in the resume. `verify_truth.py` runs against
+the cover letter too.
 
 ### Stage 9 — ATS Score Estimator
 
@@ -234,20 +310,31 @@ reason. An honest "stretch" is more useful than a flattering score.
 
 ### Stage 11 — Final Generator
 
-Emit in this order, always:
+**Deliver `resume.tex` + `resume.pdf`, and `cover_letter.tex` + `cover_letter.pdf` when a letter
+was requested. Nothing else** (Core Directive rule 3).
 
-1. **`resume.txt`** — the canonical plaintext. This is what the ATS reads; it is the deliverable
-   that must be right.
-2. **`resume.md`** — readable review copy.
-3. **`resume.tex`** — only when the user wants the typeset version. Build rules, the exact
-   spacing knobs, and the one-page fitting procedure are in `references/latex-formatting.md`.
-   The ATS-safety preamble lines (`cmap`, `fontenc`, `lmodern`) are load-bearing and must never
-   be dropped — without them PDF text extraction can turn "Artificial Intelligence" into
-   "Articial" on the older extractors many ATS products still ship, and the failure is silent.
-4. **`tailoring-report.md`** — gap table, ATS score, recruiter review, the change log
-   (every rewritten line, before → after), and the **unresolved / absent list**.
+Build rules, the exact spacing knobs, and the one-page fitting procedure are in
+`references/latex-formatting.md`. The ATS-safety preamble lines (`cmap`, `fontenc`, `lmodern`)
+are load-bearing and must never be dropped — without them PDF text extraction can turn
+"Artificial Intelligence" into "Articial" on the older extractors many ATS products still ship,
+and the failure is silent.
 
-Then run the verifier before showing anything:
+Generate a plaintext rendering and a tailoring report **internally** — the verifier and the ATS
+scorer both consume them, and Stage 10 needs the change log. Write them to a scratch path and do
+not deliver them.
+
+Before delivering, every time:
+
+```bash
+pdflatex -interaction=nonstopmode resume.tex && pdflatex -interaction=nonstopmode resume.tex
+grep -E "Output written|Overfull" resume.log     # must say "(1 page"
+pdftotext resume.pdf - | head -60                 # extraction sanity
+python scripts/measure_layout.py resume.pdf --check-indent
+```
+
+A build that produces 2 pages is a failed build, not a stylistic choice — go cut content.
+
+Then run the verifier:
 
 ```bash
 python scripts/verify_truth.py --resume out/resume.txt --ledger assets/truth-base.yaml
@@ -302,10 +389,14 @@ Read on demand — don't load everything up front.
 | `references/edge-cases.md` | Any time a rewrite feels like it needs a fact you don't have |
 | `references/prompt-engineering-notes.md` | Extending or debugging the skill itself |
 | `references/evaluation-checklist.md` | Before delivering — the pre-flight checklist |
+| `assets/cover-letter-master.tex` | Stage 8b — the cover letter template |
 | `examples/` | Three end-to-end worked runs against real JD archetypes |
 
 ## Output contract
 
-Always deliver files, not chat-only text. Always deliver `resume.txt` and
-`tailoring-report.md` at minimum. Always end the response with the honest verdict and the
-absent list — the parts the user needs to act on are the gaps, not the compliments.
+Deliver `resume.tex` + `resume.pdf`, plus `cover_letter.tex` + `cover_letter.pdf` when a letter
+was requested. No other files. No walkthrough, no rationale, no summary of changes.
+
+Break that silence only for a factual problem: a failing truth check, an unresolved ledger
+`conflict:` that affects the page, or an absent requirement material enough to change whether the
+application is worth submitting. A few lines, then stop.
