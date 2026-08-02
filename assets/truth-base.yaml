@@ -115,7 +115,7 @@ experience:
         detail_gcp: "GCP: Cloud Scheduler -> Cloud Run -> Cloud Tasks"
         detail_queue: "BullMQ / Redis job queue (per LinkedIn)"
         metric: "2 scheduled cycles daily; trigger gates, cooldowns, tension-scoring over 100+ candidate signals"
-        conflict: "Resume says GCP Scheduler/Run/Tasks; LinkedIn says BullMQ/Redis. Both may be true (queue on top of Cloud Tasks). Confirm before naming only one."
+        resolved: "Confirmed by the candidate on 2026-08-02: BOTH stacks are real and both may be named. The worker runs on GCP (Cloud Scheduler -> Cloud Run -> Cloud Tasks) with a BullMQ/Redis job queue. Name whichever subset the JD rewards; naming both is also correct. Nothing here is a conflict."
         verified: true
       - id: euno.rag
         claim: "embeddings-based RAG / semantic retrieval over a per-user knowledge graph"
@@ -229,11 +229,10 @@ experience:
   - id: safetechno
     title: Data Analyst
     title_variants:
-      - Data Analyst
-      - "Data Analyst — Part-Time"
+      - Data Analyst          # the ONLY permitted form; never append an employment type
     employer: SAFETECHNO SERVICES
-    type: "Full-time per LinkedIn; 'Part-Time' on recent resume versions"
-    conflict: "Employment type differs between LinkedIn (Full-time) and resume.tex (Part-Time). Resolve — this is a material claim."
+    type: omit
+    resolved: "Confirmed by the candidate on 2026-08-02: DO NOT print an employment type for this role. No 'Full-Time', no 'Part-Time', no '-- Part-Time' suffix on the title. The entry is simply 'Data Analyst, SAFETECHNO SERVICES' with its dates. Sources disagreed and the candidate chose to state neither, which is accurate and avoids the conflict entirely."
     start: 2021-01
     end: 2023-12
     tense: past
@@ -627,8 +626,6 @@ forbidden_claims:
 
 # ---------------------------------------------------------------------------
 open_questions:
-  - "SAFETECHNO employment type: full-time or part-time?"
-  - "EUNO heartbeat infrastructure: GCP Cloud Tasks, BullMQ/Redis, or both?"
   - "EUNO RAG safeguards: 'in-code authorization' or 'row-level security'?"
   - "PyGrep: CLI + regex engine, VS Code extension, or both?"
   - "Which Anthropic certificate URL maps to which certificate?"
