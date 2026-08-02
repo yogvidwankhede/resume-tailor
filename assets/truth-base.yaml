@@ -174,7 +174,7 @@ experience:
     type: Part-time
     start: 2025-08
     end: 2026-01
-    conflict: "Start/end conflict: resume.tex + LinkedIn say Aug 2025 – Jan 2026; t2/wbase/wb/t/v_* say Sep 2025 – Feb 2026. LinkedIn is the more likely authority. RESOLVE before shipping."
+    resolved: "Confirmed by the candidate on 2026-08-02: August 2025 - January 2026. Older drafts saying Sep 2025 - Feb 2026 are wrong; do not reintroduce."
     tense: past
     verified: true
     domain: [teaching, electrical engineering, circuit analysis, mentoring]
@@ -627,7 +627,6 @@ forbidden_claims:
 
 # ---------------------------------------------------------------------------
 open_questions:
-  - "Teaching Assistant date range: Aug 2025–Jan 2026 or Sep 2025–Feb 2026?"
   - "SAFETECHNO employment type: full-time or part-time?"
   - "EUNO heartbeat infrastructure: GCP Cloud Tasks, BullMQ/Redis, or both?"
   - "EUNO RAG safeguards: 'in-code authorization' or 'row-level security'?"
