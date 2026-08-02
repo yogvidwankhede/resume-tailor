@@ -111,6 +111,16 @@ be overlooked: **the gap is often not a gap, it's a previous space cut.**
 **Teaching Assistant dates: August 2025 - January 2026.** Confirmed by the candidate on
 2 August 2026. Older drafts carrying Sep 2025 - Feb 2026 are wrong. Do not reintroduce.
 
+**SAFETECHNO employment type: print nothing.** The candidate's instruction is that neither
+"Full-Time" nor "Part-Time" appears. The entry reads `Data Analyst, SAFETECHNO SERVICES` with its
+date range and no type qualifier. This is the accurate choice given the sources disagreed, and it
+is not a hedge: a resume entry with no employment type is completely normal and claims nothing
+either way.
+
+**EUNO heartbeat infrastructure: both stacks are real.** GCP (Cloud Scheduler to Cloud Run to
+Cloud Tasks) *and* a BullMQ/Redis job queue. Name whichever subset the posting rewards, or name
+both. This was never a conflict, only an incomplete record.
+
 ---
 
 ## Unresolved conflicts
@@ -121,8 +131,6 @@ everything else on the page.
 
 | Item | Options | Note |
 |---|---|---|
-| SAFETECHNO employment type | Full-time (LinkedIn) **vs** Part-Time (recent resume) | Material — three years full-time reads very differently |
-| EUNO heartbeat infrastructure | GCP Cloud Tasks **vs** BullMQ/Redis | Possibly both; confirm before naming only one |
 | EUNO RAG safeguards | "in-code authorization" **vs** "row-level security" | Pick the one that is literally true |
 | PyGrep | CLI + regex engine (GitHub) **vs** VS Code extension (portfolio) | Confirm |
 | Anthropic certificate URLs | Which link maps to which certificate | Supplied unlabeled |
