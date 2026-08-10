@@ -109,13 +109,22 @@ Archetype → default selection from this ledger:
 
 | Target role | Projects |
 |---|---|
-| LLM / agent platform | VentureOS, HealthMate-AI, Vishwakarma |
+| **Evaluation / measurement / model quality** | **Rubricon, HateXplain audit**, HealthMate-AI |
+| **Trust & safety / responsible AI** | **HateXplain audit, Rubricon**, HealthMate-AI |
+| LLM / agent platform | VentureOS, HealthMate-AI, Vishwakarma (add Rubricon if the JD says "evals") |
 | ML engineer | HealthMate-AI, Sign Language Interpreter, Image Captioning |
 | Backend / infra / systems | PyShell, HTTP server from scratch, VentureOS |
-| Data scientist / analyst | Sales Dashboard, Sign Language Interpreter, HealthMate-AI |
-| Applied research | Sign Language Interpreter (Springer), HealthMate-AI, Image Captioning |
-| Developer tooling / DX | Vishwakarma, PyShell, PyGrep |
+| Data scientist / analyst | Sales Dashboard, HateXplain audit, HealthMate-AI |
+| Applied research | Rubricon, HateXplain audit, Sign Language Interpreter (Springer) |
+| Developer tooling / DX | Vishwakarma, PyShell, Rubricon |
 | Health / civic tech | HealthMate-AI, Sign Language Interpreter, Image Captioning |
+
+**Rubricon and the HateXplain audit are a pair.** Rubricon is the instrument, the audit is the
+measurement on real data. When space allows both, lead with whichever the posting rewards: the
+harness for infrastructure and tooling roles, the audit for research and analysis roles. When
+only one fits, the audit carries real empirical numbers and the harness carries engineering
+rigor. Never present Rubricon's own verdicts as findings about real models (see
+`references/truth-base.md` § The Rubricon landmine).
 
 ### Retitling
 A project title is prime keyword real estate. Retitle to lead with the capability

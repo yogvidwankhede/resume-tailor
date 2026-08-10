@@ -16,16 +16,17 @@ experience, so this is an **early-career profile**: Education leads, projects
 carry real weight, and the credibility risk is *over*-claiming scope rather than
 under-selling.
 
-Two published papers, two Anthropic certifications, 24 public repos, one shipped
-product that placed top 10 in a public competition. The inventory is unusually
-broad for the career stage, which means **the tailoring problem here is selection,
+Two published papers, two Anthropic certifications, 26 public repos, one shipped
+product that placed top 10 in a public competition, and a pair of evaluation-methodology
+repositories that are the most technically serious work in the inventory. The range is
+unusually broad for the career stage, which means **the tailoring problem here is selection,
 not scarcity.** Most runs will spend more effort deciding what to leave out.
 
 ---
 
-## The four distinct capability stories
+## The five distinct capability stories
 
-The ledger supports four different resumes. Pick one per application; mixing them
+The ledger supports five different resumes. Pick one per application; mixing them
 produces a resume that reads as unfocused.
 
 **1. Production LLM / agent engineering.**
@@ -45,7 +46,18 @@ SAFETECHNO (three years of Oil & Gas analytics, dashboards, process
 standardization), the Tableau sales dashboard, Oasis Infobyte. The longest tenure
 in the inventory is here — SAFETECHNO is three years.
 
-**4. Systems / backend.**
+**4. Evaluation / measurement methodology.** *(added August 2026, and now the strongest
+card for the right posting)*
+Rubricon (an evaluation harness with a programmatic claim gate, Krippendorff's alpha with
+bootstrap CIs, a 196-run sensitivity analysis, and byte-identical reproducibility across two
+platforms) plus the HateXplain label-quality audit (alpha 0.4597 on 60,444 real crowd labels,
+an 0.8143 accuracy ceiling, and the finding that 51.1% of gold labels sit at a one-vote margin).
+Nothing else in the inventory demonstrates statistical rigor as a deliberate engineering
+discipline. For evaluation, measurement, research-engineering, trust-and-safety, or any role
+whose posting talks about evals, benchmarks, annotation quality, or model comparison, these two
+outrank every ML project here.
+
+**5. Systems / backend.**
 PyShell (POSIX shell, on PyPI), the from-scratch HTTP/1.1 server, PyGrep (regex
 engine), the DNS-over-HTTPS Chrome extension, plus the NestJS/TypeScript backend
 work at EUNO. This story is invisible on every existing resume version and is the
@@ -68,6 +80,34 @@ that get mis-attributed most often:
   known-easy and heavily criticized benchmark. The defensible framing emphasizes
   the *operating point being tuned for downstream review capacity*, not the raw
   accuracy, because a sophisticated reader will otherwise discount the number.
+
+---
+
+## The Rubricon landmine
+
+Rubricon's own headline findings run on a corpus with **planted ground truth.** Its README
+states this plainly: the findings demonstrate that the pipeline detects the conditions it was
+built to detect, and they are *not* empirical claims about language models.
+
+So the claimable work is the **infrastructure** — the gate, the statistics, the sensitivity
+analysis, the reproducibility guarantee, the red-teaming of the eval itself. Never write a
+bullet that presents a Rubricon track verdict, effect size, or STOP/INVEST decision as a
+measured result about a real model. That would be exactly the false-attribution failure this
+whole skill exists to prevent, and the README disproves it on click.
+
+When a posting wants *results on real data*, cite the HateXplain audit instead. That is where
+the empirical numbers live, and they are strong: 20,148 posts, 60,444 labels, alpha 0.4597 with
+a clustered bootstrap CI, an accuracy ceiling of 0.8143, and a demonstration that a two-point
+leaderboard gap on a test-split-sized eval is inside the noise floor.
+
+The honest one-line framing of the pair: **Rubricon is the instrument, HateXplain is the
+measurement.**
+
+Two further notes. The HateXplain audit is not a criticism of HateXplain, and saying so is part
+of the finding — the audit says the corpus is careful, well-documented work and that hate speech
+is a genuinely contested construct. And the budget result (at fixed cost, power is maximised at
+one rater per item) is counterintuitive enough that it invites a challenge; the defence is the
+attenuation model, so be ready to walk through it.
 
 ---
 
