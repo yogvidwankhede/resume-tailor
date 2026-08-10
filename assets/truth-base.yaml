@@ -284,6 +284,103 @@ experience:
 # ---------------------------------------------------------------------------
 projects:
 
+  - id: rubricon
+    name: "Rubricon: Evaluation Signal Infrastructure"
+    title_variants:
+      - "Rubricon: Evaluation Harness with a Programmatic Claim Gate"
+      - "Rubricon: Measurement Infrastructure for LLM Evaluation"
+      - "Rubricon: Inter-Rater Reliability and Statistical Power Tooling for Evals"
+    url_repo: https://github.com/yogvidwankhede/rubricon
+    url_live: https://yogvidwankhede.github.io/rubricon/results/dashboard.html
+    stack: [Python, statistics, Krippendorff alpha, bootstrap CI, power analysis, Make]
+    scale: "32 source modules, 12 test modules, 12 docs, 30 generated result artifacts"
+    verified: true
+    facts:
+      - id: rub.gate
+        claim: "programmatic signal gate that blocks evaluation claims the evidence cannot support"
+        detail: "pre-registered thresholds declared before results exist; 11 independent checks (reliability, precision, effect-vs-MDE, interval-excludes-zero, coverage, replication, drift, rubric specification, gold calibration, annotator pool, depth contract); every check runs with no short-circuit; blocked claims stay in the ledger and render as blocks rather than being silently omitted"
+        metric: "11 checks; PASS / WARN / BLOCK verdicts"
+        defend: "Why do all checks run instead of short-circuiting, and what does a BLOCK do downstream?"
+        verified: true
+      - id: rub.stats
+        claim: "statistical core implementing Krippendorff's alpha with bootstrap confidence intervals, Fleiss' kappa, Gwet's AC1, and composite reliability with the Spearman-Brown correction"
+        detail: "no third-party dependencies in the statistical core; validated against published reference values; runs fully offline with no API key"
+        verified: true
+      - id: rub.sensitivity
+        claim: "sensitivity analysis that re-runs the entire pipeline under perturbed assumptions and reports which conclusions survive"
+        metric: "196 pipeline runs; identified a threshold flipping at a 2.1% margin from the observed value and labelled it FRAGILE"
+        detail: "reports honest conditional findings rather than declarative ones; e.g. a STOP verdict degrades to ITERATE under three contested flags, and holds in only 11/20 randomized seeds"
+        defend: "What made you build the sensitivity pass, and what did it change about how you reported the result?"
+        verified: true
+      - id: rub.repro
+        claim: "deterministic, fully reproducible pipeline"
+        metric: "all 30 result artifacts regenerate byte-identically across Linux x86-64 / Python 3.11 and macOS arm64 / Python 3.14"
+        detail: "make all regenerates every artifact from source with no network; scripts/audit_numbers.py verifies every number in the docs traces back to a generated result"
+        verified: true
+      - id: rub.redteam
+        claim: "red-team probes against the evaluation itself"
+        detail: "length bias, lazy baselines, position-bias fragility, leave-one-annotator-out tested against the published CI rather than an arbitrary constant, and a rubric-shortcut check computed against the leave-one-out composite so the correlation is not mechanically inflated by part-whole overlap"
+        verified: true
+      - id: rub.power
+        claim: "minimum detectable effect analysis that blocks under-powered ranking claims"
+        metric: "a 0.157 contrast against an MDE of 0.108 is reportable; a 0.033 contrast against an MDE of 0.094 is blocked as inside the noise floor"
+        verified: true
+      - id: rub.docs
+        claim: "decision memos, a research report, five ADRs, annotation guidelines, a calibration protocol, and an engineering log recording real bugs and their root causes"
+        detail: "the engineering log documents defects found in the quality machinery itself, including a drift detector with no null model, circular red-team assertions, and a bias detector that reported annotators' value positions as leniency bias"
+        verified: true
+    do_not: "CRITICAL. Rubricon's own headline findings run on a corpus with PLANTED GROUND TRUTH. The README states plainly that the findings demonstrate the pipeline detects conditions it was built to detect, and are NOT empirical claims about language models. Never present Rubricon's verdicts, effect sizes, or track results as measured findings about real LLMs or real model comparisons. The claimable work is the INFRASTRUCTURE: the gate, the statistics, the sensitivity analysis, the reproducibility, the red-teaming. For results on real human data, cite hatexplain_audit instead."
+    note: "The strongest artifact in the entire inventory for evaluation, measurement, research-engineering, and trust-and-safety roles. It is also the only project demonstrating statistical rigor as a deliberate engineering discipline rather than as a byproduct."
+
+  - id: hatexplain_audit
+    name: "HateXplain Label-Quality Audit"
+    title_variants:
+      - "HateXplain Label-Quality Audit: Reliability, Power, and the Accuracy Ceiling"
+      - "Reliability Audit of a Public Hate-Speech Corpus"
+      - "Annotation Quality Audit: What a Benchmark's Labels Can Actually Support"
+    url_repo: https://github.com/yogvidwankhede/hatexplain-label-audit
+    stack: [Python, Rubricon, inter-rater reliability, power analysis]
+    verified: true
+    relation: "Applies the rubricon harness to REAL crowd annotations. This is where the empirical claims live."
+    facts:
+      - id: hx.scale
+        claim: "reliability audit of the published HateXplain annotations"
+        metric: "3 annotators, 20,148 posts, 60,444 labels; every number computed from the published annotation file"
+        verified: true
+      - id: hx.alpha
+        claim: "measured label reliability with clustered bootstrap confidence intervals"
+        metric: "Krippendorff's alpha 0.4597, 95% CI [0.4452, 0.4729]; Fleiss' kappa 0.4597; Gwet's AC1 0.4689; raw pairwise agreement 0.6439"
+        detail: "ruled out the kappa paradox as an explanation: raw agreement is nowhere near the level the paradox requires and the AC1-kappa gap is 0.0092"
+        defend: "Why does ruling out the kappa paradox matter for the conclusion?"
+        verified: true
+      - id: hx.ceiling
+        claim: "derived the accuracy ceiling implied by the labels themselves"
+        metric: "0.8143 on the 3-way task and 0.8943 on the binary task; a perfect modal-label predictor still disagrees with a random annotator on 18.6% of posts; 919 posts (4.6%) carry three different labels and therefore have no target label at all"
+        verified: true
+      - id: hx.noise
+        claim: "showed that a two-point leaderboard gap on a test-split-sized evaluation sits inside the noise floor"
+        metric: "at n=2015 (the documented 10% test share) with 20% system disagreement, the MDE at 80% power is 0.0279"
+        verified: true
+      - id: hx.fragility
+        claim: "separated coefficient robustness from gold-label robustness"
+        metric: "removing the busiest annotator (5,730 labels, present on 28.4% of posts) moves alpha by only -0.0207, but 2,300 posts (11.4%) lose their majority label entirely; 51.1% of all posts sit at a one-vote margin"
+        detail: "alpha weights posts rather than people, which is why the two robustness questions have different answers"
+        defend: "Why is the coefficient robust when half the gold labels are one vote from flipping?"
+        verified: true
+      - id: hx.judge
+        claim: "established the realistic ceiling for an LLM judge on this task"
+        metric: "a real held-out annotator matches the two-peer panel on 76.1% of posts where those peers agreed (judge-panel alpha 0.6255, 0.7882 after correcting for the panel's own unreliability); the two-rater panel reaches consensus on only 64.2% of posts"
+        detail: "an LLM judge on this task should be measured against 76.1%, not against 100%"
+        verified: true
+      - id: hx.budget
+        claim: "derived the annotation-budget result that, at fixed labelling cost, aggregate statistical power is maximised at one rater per item"
+        metric: "true-scale MDE 0.0075 at k=1 against 0.0104 at k=3, a 39% penalty; the published 3-rater aggregate reaches 0.7185 reliability and reaching 0.800 would require 5 raters"
+        detail: "replication earns its cost through measurability and per-item defensibility, not through power"
+        defend: "Walk through the attenuation model that produces this."
+        verified: true
+    do_not: "Do not frame this as a criticism of HateXplain. The audit states explicitly that HateXplain is careful, well-documented work and that hate speech is a genuinely contested construct. The finding is about what any measurement built on subjective labels can support."
+    note: "The empirical companion to rubricon. Pair them: rubricon is the infrastructure, this is the result on real data. For an evaluation or trust-and-safety role, these two together are the strongest evidence in the inventory."
+
   - id: healthmate
     name: HealthMate-AI
     title_variants:
@@ -530,7 +627,9 @@ skills:
     Agent Orchestration:   [euno, ventureos]
     RAG:                   [euno, healthmate, law_gpt]
     Prompt Engineering:    [euno, vishwakarma]
-    Evals:                 [euno, healthmate]
+    Evals:                 [rubricon, hatexplain_audit, euno, healthmate]
+    LLM-as-Judge Evaluation: [hatexplain_audit, rubricon]
+    Eval Harness Design:   [rubricon]
     MCP:                   [vishwakarma]
     Structured Output / JSON Schema: [euno]
     GPT-4o / GPT-4o-mini:  [euno, healthmate, law_gpt]
@@ -558,6 +657,16 @@ skills:
     Anomaly / Fraud detection: [asterisc]
     Hypothesis Testing: [education]
     ROC-AUC / Precision-Recall: [asterisc]
+    Inter-Rater Reliability: [rubricon, hatexplain_audit]
+    "Krippendorff's alpha": [rubricon, hatexplain_audit]
+    "Fleiss' kappa":       [rubricon, hatexplain_audit]
+    "Gwet's AC1":          [rubricon, hatexplain_audit]
+    Bootstrap Confidence Intervals: [rubricon, hatexplain_audit]
+    Statistical Power / MDE: [rubricon, hatexplain_audit]
+    Sensitivity Analysis:  [rubricon]
+    Measurement Validity:  [rubricon, hatexplain_audit]
+    Annotation Design / Rubric Design: [rubricon]
+    Data Quality Auditing: [rubricon, hatexplain_audit]
     Inverse problems / Method of Fundamental Solutions: [wustl_med]
     Signal processing: [wustl_med]
   data_and_storage:
@@ -580,6 +689,8 @@ skills:
     NestJS:           [euno]
     REST APIs:        [euno, sentiment_api]
     Git / GitHub:     [all]
+    Make / reproducible builds: [rubricon]
+    Deterministic pipelines: [rubricon]
     Vercel:           [ventureos]
     Heroku:           [fake_news]
     Render:           [fiscal_agent]
@@ -621,6 +732,10 @@ forbidden_claims:
     reason: "HealthMate-AI is RAG, not agents."
   - claim: "fine-tuned sentence-transformer ensemble model"
     reason: "The 'ensemble' descriptor was dropped as inaccurate."
+  - claim: "Rubricon's track verdicts, effect sizes, or STOP/INVEST decisions presented as findings about real language models"
+    reason: "Rubricon's own corpus carries planted ground truth. Its README says so explicitly. Those numbers demonstrate that the pipeline detects what it was built to detect; they are not empirical claims about any model. Cite hatexplain_audit for results on real data."
+  - claim: "The HateXplain audit framed as showing HateXplain is bad or poorly done"
+    reason: "The audit explicitly states HateXplain is careful, well-documented work. The finding is about what measurements built on subjective labels can support, not about the corpus authors."
   - claim: "Any Forage program starter repo presented as original work"
     reason: "forage-walmart-task-4 and forage-midas are forks of provided starter repos."
 
