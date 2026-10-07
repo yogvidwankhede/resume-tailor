@@ -15,6 +15,14 @@ have volunteered to answer.
 
 ---
 
+## The truth check in action
+
+![The truth check: a clean resume passes, one with an invented job fails](docs/screenshots/resume-tailor-1.webp)
+
+*The truth check: a clean resume passes, one with an invented job fails.*
+
+The text of that session is in [`docs/screenshots/session.txt`](docs/screenshots/session.txt).
+
 ## Install
 
 Drop the folder into your skills directory:

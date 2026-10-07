@@ -1,0 +1,17 @@
+$ python scripts/verify_truth.py --resume out/resume.txt --ledger assets/truth-base.yaml
+Truth check passed (0 warning(s)).
+
+$ python scripts/verify_truth.py --resume out/tampered.txt --ledger assets/truth-base.yaml
+  [FAIL] number '2019' appears in the resume but not in the ledger
+  [FAIL] number '4150' appears in the resume but not in the ledger
+  [FAIL] number '87.3' appears in the resume but not in the ledger
+  [FAIL] number '2.6' appears in the resume but not in the ledger
+  [warn] date 2019-01 has no ledger counterpart
+  [warn] date 2021-03 has no ledger counterpart
+  [warn] possible unknown employer: 'Globex Corporation'
+TRUTH CHECK FAILED — 4 violation(s), 3 warning(s).
+Fix the RESUME, not the ledger — unless the candidate confirms the
+ledger was genuinely missing a real fact.
+
+$ echo $?
+1
