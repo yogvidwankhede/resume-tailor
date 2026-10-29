@@ -207,3 +207,14 @@ resume-tailor/
 ├── examples/                      three worked end-to-end runs
 └── evals/evals.json               test prompts
 ```
+
+
+## Deterministic helpers
+
+| Script | Purpose |
+|---|---|
+| `scripts/jd_prescan.py` | Section-weighted JD term detection from `assets/jd_terms.json`, tagged against the truth ledger |
+| `scripts/keyword_delta.py` | Weighted keyword coverage before vs after tailoring; gaps reported, never claimed |
+| `scripts/output_name.py` | `Firstname_Lastname_Resume_Company` file names |
+
+Run the tests with `python -m pytest tests`.

@@ -163,6 +163,13 @@ Diagnose the current resume before touching it. Report, concretely:
 
 ### Stage 2 — JD Analyzer
 
+**Start with the deterministic pre-scan** (no judgment, so it never drifts):
+`python scripts/jd_prescan.py --jd jd.txt --ledger <truth-base.yaml> --out out/jd-prescan.json`.
+It weights terms by where they appear (title, Required, Preferred, description), skips EEO/benefits
+boilerplate, and tags each term `claimable` / `gap` / `unverified` against the ledger. Treat it as a
+draft: review it, then fill the full schema below. Every `gap` term is stated plainly in the cover
+note and is never added to the resume. Detection never grants a skill.
+
 Extract into `assets/schemas/jd-analysis.schema.json` shape. Full taxonomy and extraction
 heuristics: **read `references/jd-analysis.md`.** Extract at minimum:
 
@@ -359,6 +366,11 @@ of required terms, preferred terms, and hidden keywords, plus a parseability che
 is a *diagnostic*, not a grade — its job is to produce the list of missing terms so you can ask:
 *is there a true statement that would naturally contain this word?* If yes, rewrite. If no,
 leave it missing and note it.
+
+Also report the before/after delta so the tailoring is measurable:
+`python scripts/keyword_delta.py --prescan out/jd-prescan.json --before <master>.tex --after <tailored>.tex`
+(`gap` terms are excluded from the percentage and listed separately). Name the output files with
+`python scripts/output_name.py --name "<Full Name>" --company "<Company>"` (add `--kind CoverLetter`).
 
 Scoring bands, weighting, and the parseability rules: `references/scoring-and-review.md`.
 
